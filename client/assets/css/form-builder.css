@@ -1,0 +1,18 @@
+#optional_label.form-control{
+	max-width: 20%;
+}
+
+.form-control{
+	display: inline;
+}
+
+#box1, #box2{
+	width: 80%;
+	border: none;
+	padding: 6px;
+	color: black;
+}
+
+.remove-box{
+	margin-left: 20px;
+}

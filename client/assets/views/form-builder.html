@@ -21,6 +21,7 @@
 	<link rel="stylesheet" href="assets/css/neon-forms.css">
 	<link rel="stylesheet" href="assets/css/custom.css">
 	<link rel="stylesheet" href="assets/css/patient-queue.css">
+	<link rel="stylesheet" href="assets/css/form-builder.css">
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 
@@ -144,7 +145,40 @@
 
 
 		<hr />
-		<h1>FORM BUILDER</h1>
+		<h1>Form Builder</h1>
+		<center><h3>Preview</h3></center>
+<form role = "form">
+   <div class = "form-group">
+      <label for = "FirstName">First Name</label>
+      <input type = "text" class = "form-control" id = "f_name" placeholder = "Enter your First Name" required>
+   </div>
+   <div class = "form-group">
+      <label for = "lastName">Last Name</label>
+      <input type = "text" class = "form-control" id = "l_name" placeholder = "Enter your Last Name" required>
+   </div>
+   <div class = "form-group">
+      <label for = "name">Phone Number (###)###-####</label>
+      <input type = "tel" class = "form-control" pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' id = "phone" placeholder = "Enter your Phone Number" required>
+   </div>
+    <div class = "form-group">
+		<div class="my-form">
+   			<div class="addField">
+
+   			</div>
+   		</div>
+   </div>
+   
+   
+
+   <h3>Add your own fields (up to 2)</h3>
+   <div class="my-form">
+        <p class="text-box">
+        	<input type = "text" class = "form-control" id = "optional_label" placeholder = "Enter label for field" maxlength="30">
+        	<button type="button" class="btn btn-success add-box">Add</button>            
+        </p>
+	</div>
+   <center><button type = "submit" class = "btn btn-primary">Submit</button></center>
+</form>
 
 
 		<!-- Imported styles on this page -->
@@ -171,6 +205,7 @@
 		<script src="assets/js/toastr.js"></script>
 		<script src="assets/js/fullcalendar/fullcalendar.min.js"></script>
 		<script src="assets/js/neon-chat.js"></script>
+		<script src="assets/js/form-builder.js"></script>
 
 
 		<!-- JavaScripts initializations and stuff -->

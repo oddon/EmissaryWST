@@ -4,20 +4,11 @@ $(document).ready(function(){
 
     var VALIDATE_COMPANY_ID = "validate_company_id";
     var ADD_VISITOR = "add_visitor";
-   /* var companyData = {
-        company_id: "56d40a6aa6de7129d0a4b1f6",
-        name: "WST",
-        credit_card_number: "12345678912",
-        expiration_date: "2018-4-24",
-        email: "danielK@wst.com",
-        phone_number: "3109851473",
-        paid_time: "2016-04-23T18:25:43.511Z"
-    };*/
     
     var companyData = JSON.parse(localStorage.getItem("currentCompany"));
     console.log(companyData);
-    //var companyId = getCookie('company_id');
     socket.emit(VALIDATE_COMPANY_ID, companyData);
+    
     //Prevent users from scrolling around on iPad
     document.ontouchmove = function(e) {
         e.preventDefault();
@@ -42,7 +33,18 @@ $(document).ready(function(){
     function submitForm(){
         //event.preventDefault();
         var data = grabFormElements();
-        console.log(data.company_id);
+        //console.log(data.company_id);
+        if(localStorage.getItem("slackToken")&&localStorage.getItem("slackChannel"))
+        {
+             $.post("https://slack.com/api/chat.postMessage",
+             {
+                'token': localStorage.getItem("slackToken"),
+                'channel': localStorage.getItem("slackChannel"), 
+                'text': "Name: " + data['first_name'] + " " + data['last_name'] + " Phone Number: " + data['phone_number']
+             },
+             function(data, status){
+              });
+        }
         socket.emit(ADD_VISITOR, data);
 
         $(this).animate({

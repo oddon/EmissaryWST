@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<script src = "assets/native/js/shared.js"></script>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<meta charset="utf-8">
@@ -19,9 +20,11 @@
 	<link rel="stylesheet" href="assets/css/neon-core.css">
 	<link rel="stylesheet" href="assets/css/neon-theme.css">
 	<link rel="stylesheet" href="assets/css/neon-forms.css">
+	<link rel="stylesheet" href="assets/css/form-builder.css">
 	<link rel="stylesheet" href="assets/css/custom.css">
 	<link rel="stylesheet" href="assets/css/patient-queue.css">
-	<link rel="stylesheet" href="assets/css/form-builder.css">
+	
+	<link rel="stylesheet" href="assets/native/css/appointment.css">
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 
@@ -45,7 +48,7 @@
 
 				<!-- logo -->
 				<div class="logo">
-					<a href="index.html">
+					<a href="visitors.html">
 						<img src="images/emissary.png" width="150" alt="" />
 					</a>
 				</div>
@@ -83,6 +86,12 @@
 					</a>
 				</li>
 				<li>
+					<a href="/appointments.html">
+						<i class="entypo-calendar"></i>
+						<span class="title">Appointments</span>
+					</a>
+				</li>
+				<li>
 					<a href="#">
 						<i class="entypo-clipboard"></i>
 						<span class="title">Forms</span>
@@ -112,10 +121,9 @@
 					<!-- Profile Info -->
 					<li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
 
-						<a href="#" >
-							<img src="assets/images/thumb-1@2x.png" alt="" class="img-circle" width="44" />
-							Demo Company
-						</a>
+						<div id="company-name">
+							<h1>Hello, <span id="user-name"> </span></h1>
+						</div>
 
 
 					</li>
@@ -129,14 +137,15 @@
 			<div class="col-md-6 col-sm-4 clearfix hidden-xs">
 
 				<ul class="list-inline links-list pull-right">
-
-
-
-					<li>
-						<a href="404.html">
-							Log Out <i class="entypo-logout right"></i>
-						</a>
-					</li>
+					<div class="dropdown">
+					    <input class="dropdown-toggle" type="image" src="assets/images/setting.png" data-toggle="dropdown">
+					    <ul class="dropdown-menu">
+					    	<li><a href="/checkin.html">Check-In</a></li>
+					    	<li><a id="logoutButton" href="/index.html">
+								Log Out <i class="entypo-logout right"></i></a>
+							</li>
+					    </ul>
+				  </div>
 				</ul>
 
 			</div>
@@ -215,7 +224,8 @@
 
 		<script src="assets/js/socket.io.js"></script>
 		<script type = "text/javascript" src= "js/handlebars-v4.0.5.js"></script>
-		<script type ="text/javascript" src = "js/dashboard.js"> </script>
+		<script type ="text/javascript" src="assets/native/js/login.js"></script>
+		<script type ="text/javascript" src = "assets/native/js/appointments.js"> </script>
 
 </body>
 </html>

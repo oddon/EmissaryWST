@@ -51,10 +51,11 @@ $(document).ready(function(){
             data: data,
             dataType: 'json',
             success: function(response){
-                console.log(response);
+                //console.log(response);
                 if(url == '/api/employees') {
+                    localStorage.setItem('userState', 1);
                     localStorage.setItem('currentUser', JSON.stringify(response));
-                    location.href = '/#/visitors.html';
+                    location.href = '/visitors.html';
                 }
                 else if (url == '/api/companies') {
                     localStorage.setItem('currentCompany', JSON.stringify(response));
@@ -64,6 +65,26 @@ $(document).ready(function(){
         });
     }
 
+    function validateCompany(){
+        var companyName = $('#form-company-name').val();
+        var companyEmail = $('#form-email').val();
+        var companyNumber = $('#form-phone').val();
+
+        if(companyName == ""){
+            console.log("username cannot be blank");
+        }
+
+        if(validateEmail(companyEmail)){
+            console.log("please enter a valid email");
+        }
+
+
+    
+
+    }
+
+
+
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
@@ -71,7 +92,7 @@ $(document).ready(function(){
 
     function checkPassword(form){
 
-        if(form.username.value == "") {
+        if(form.first.value == "") {
           alert("Error: Username cannot be blank!");
           form.username.focus();
           return false;

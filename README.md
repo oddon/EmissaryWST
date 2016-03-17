@@ -32,7 +32,9 @@ App is on heroku, http://webstormtroopers.herokuapp.com/
 
 404 : Not Found
 
-Assumption is that there will be system that provides our application with the appointment information
+Assumption is that there will be a client system that provides our application with the appointment information.
+
+The first request must be made to POST /api/employees/login, and every consecutive request must send the returned token in its request body as "token".
 
 ##1. Company 
 ###Create
@@ -176,13 +178,7 @@ accounts to manage the companies' accounts
 **Success**
 
 	{
-		_id : "12314125",
-		first_name : "test",
-        last_name : "test",
-		email : "test@yahoo.com",
-		phone_number : "6581922344",
-		company_id : "123124124",
-		role : "a_admin"
+		token : "f3fFD09jlrJDM9fj63MCHudm3m"
 	}
 **Error**
 	

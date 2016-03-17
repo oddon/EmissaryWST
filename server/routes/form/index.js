@@ -2,22 +2,23 @@
 
 var express = require('express');
 var controller = require('./form.controller');
-var authController = require('../../config/auth');
+//var authController = require('../../config/auth');
+//TODO - add in authController.isBearerAuthenticated as first callback in route
 
 var router = express.Router();
 
 var bodyparser = require('body-parser');
 var urlparser = bodyparser.urlencoded({extended: false});
 
-router.get('/template/company/:id', authController.isBearerAuthenticated, controller.template.findByCompanyId);
-router.get('/template/:adminid', authController.isBearerAuthenticated, controller.template.findByAdminId);
-router.post('/template/:adminid', authController.isBearerAuthenticated, controller.template.sendByAdminId);
-router.post('/template', authController.isBearerAuthenticated, controller.template.create);
-router.put('/template', authController.isBearerAuthenticated, controller.template.update);
-router.delete('/template/:template_id', authController.isBearerAuthenticated, controller.template.delete);
+router.get('/template/company/:id', controller.template.findByCompanyId);
+router.get('/template/:adminid', controller.template.findByAdminId);
+router.post('/template/:adminid', controller.template.sendByAdminId);
+router.post('/template', controller.template.create);
+router.put('/template', controller.template.update);
+router.delete('/template/:template_id', controller.template.delete);
 
-router.get('/visitorList/:form_id', authController.isBearerAuthenticated, controller.submitted_form.findById);
-router.get('/visitorList', authController.isBearerAuthenticated, controller.submitted_form.findByPatientInfo);
-router.post('/visitorList', authController.isBearerAuthenticated, controller.submitted_form.create);
+router.get('/visitorList/:form_id', controller.submitted_form.findById);
+router.get('/visitorList', controller.submitted_form.findByPatientInfo);
+router.post('/visitorList', controller.submitted_form.create);
 
 module.exports = router;

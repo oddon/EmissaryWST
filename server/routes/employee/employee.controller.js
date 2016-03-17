@@ -63,6 +63,8 @@ exports.update = function(req, res) {
         employee.password = employee.generateHash(req.body.password) || employee.password;
         employee.role = req.body.role || employee.role;
 
+	//TODO - delete old token when password is changed
+	//TODO - generate and return new token when password is changed
         employee.save(function(err) {
             console.log(err);
             console.log(employee);

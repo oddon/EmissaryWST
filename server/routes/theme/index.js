@@ -7,7 +7,8 @@
 var express = require('express');
 var router = express.Router();
 var controller = require('./theme.controller');
-var authController = require('../../config/auth');
+//var authController = require('../../config/auth');
+//TODO - add in authController.isBearerAuthenticated as first callback in route
 
 /* need this to enable cross origin resource sharing.If disabled, we might
  * not need this later. This is just to get the example to work
@@ -21,15 +22,15 @@ var Theme = require('../../models/Theme');
 
 
 //post with default values
-router.post('/:user_id/theme', authController.isBearerAuthenticated, controller.template.create);
+router.post('/:user_id/theme', controller.template.create);
 
 //get the theme correspond to the user
-router.get('/:user_id/theme', authController.isBearerAuthenticated, controller.template.get);
+router.get('/:user_id/theme', controller.template.get);
 
 //Edit, when the user save new settings
-router.put('/:user_id/theme', authController.isBearerAuthenticated, controller.template.update);
+router.put('/:user_id/theme', controller.template.update);
 
 //Delete, when a user unsuscribed from the service
-router.delete('/:user_id/theme', authController.isBearerAuthenticated, controller.template.delete);
+router.delete('/:user_id/theme', controller.template.delete);
 
 module.exports = router;

@@ -19,6 +19,7 @@ function getRandomInt(min, max) {
 }
 
 module.exports.login = function(req, res) {
+  //generate new token for the logged in user
   var token = new tokenfile({
     value : uid(255),
     userId : req.user._id

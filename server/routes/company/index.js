@@ -2,16 +2,17 @@
 
 var express = require('express');
 var controller = require('./company.controller');
-var authController = require('../../config/auth');
+//var authController = require('../../config/auth');
+//TODO - add in authController.isBearerAuthenticated as first callback in route
 
 var router = express.Router();
 
 router.post('/', controller.template.create);
-router.get('/:id', authController.isBearerAuthenticated, controller.template.get);
-router.get('/', authController.isBearerAuthenticated, controller.template.getAll);
-router.put('/:id', authController.isBearerAuthenticated, controller.template.update);
-router.delete('/:id', authController.isBearerAuthenticated, controller.template.delete);
+router.get('/:id', controller.template.get);
+router.get('/', controller.template.getAll);
+router.put('/:id', controller.template.update);
+router.delete('/:id', controller.template.delete);
 
-router.put("/setting/:user", authController.isBearerAuthenticated, controller.template.resetCredentials);
+router.put("/setting/:user", controller.template.resetCredentials);
 
 module.exports = router;

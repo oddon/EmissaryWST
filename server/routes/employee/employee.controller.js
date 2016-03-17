@@ -68,7 +68,6 @@ exports.update = function(req, res) {
     Employee.findById(req.params.id, function (err, employee) {
         if(err)
             return res.status(400).json({error: "Can not Update"});
- 
         employee.first_name = req.body.first_name || employee.first_name;
         employee.last_name = req.body.last_name || employee.last_name;
         employee.email = req.body.email || employee.email;

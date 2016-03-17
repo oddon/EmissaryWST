@@ -23,8 +23,6 @@
     <link rel="stylesheet" href="assets/css/custom.css">
     <link rel="stylesheet" href="assets/css/patient-queue.css">
     <link rel="stylesheet" href="assets/native/css/employees.css">
-   <link rel="stylesheet" href="assets/native/css/appointment.css">
-
 
     <script src="assets/js/jquery-1.11.3.min.js"></script>
     <script src="assets/js/settings.js"></script>
@@ -115,16 +113,14 @@
         <div class="row">
 
             <!-- Profile Info and Notifications -->
-            <div class="col-md-6 col-sm-8 clearfix">
+            <div class=" col-md-6 col-sm-8 clearfix">
 
                 <ul class="user-info pull-left pull-none-xsm">
-
                     <!-- Profile Info -->
                     <li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
-
-                        <div id="company-name">
+                        <a href="#" id="company-name">
                             <h1>Hello, <span id="user-name"> </span></h1>
-                        </div>
+                        </a>
 
 
                     </li>
@@ -159,7 +155,7 @@
 
         <hr />
 
-        <div class="employee-container">
+        <div class="settings-container">
             <div id="visitor-queue">
                 <div class = "patient-table-header">
                     <!-- <h3>Click on a visitor for check-out</h3>-->
@@ -231,6 +227,14 @@
                                                        id="employee-email" placeholder="Email">
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label  class="col-sm-2 control-label"
+                                                    for="password">Password</label>
+                                            <div class="col-sm-10">
+                                                <input  type="text" class="form-control"
+                                                        id="employee-password" placeholder="password" required>
+                                            </div>
+                                        </div>
 
                                     </form>
 
@@ -268,7 +272,7 @@
 
 
 
-        <h2>Payment</h2>
+        <p></p>
         <form action="/payment/subscription" method="POST">
             <script
                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -276,7 +280,7 @@
                     data-name="Emissary"
                     data-description="Subscription for 1 month of service"
                     data-amount="2000"
-                    data-label="Subscribe" >
+                    data-label="Sign Me Up!" >
             </script>
         </form>
 
@@ -310,7 +314,8 @@
 <script src="assets/js/neon-chat.js"></script>
 <script type = "text/javascript" src= "assets/js/handlebars-v4.0.5.js"></script>
 <script type ="text/javascript" src = "assets/native/js/settings.js"> </script>
-<script type ="text/javascript" src="assets/native/js/login.js"></script><script type ="text/javascript" src = "assets/native/js/appointments.js"> </script>
+<script type ="text/javascript" src="assets/native/js/login.js"></script>
+
 
 
 <!-- JavaScripts initializations and stuff -->
@@ -320,6 +325,9 @@
 <!-- Demo Settings -->
 <script src="assets/js/neon-demo.js"></script>
 <script src="assets/js/socket.io.js"></script>
+
+
+
 
 </body>
 </html>

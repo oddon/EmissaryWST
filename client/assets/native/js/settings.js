@@ -57,6 +57,7 @@ $(document).ready(function(){
         newEmployee.last_name = $('#employee-last').val();
         newEmployee.phone_number = $('#employee-number').val();
         newEmployee.email = $('#employee-email').val();
+        newEmployee.password = $('#employee-password').val();
         return newEmployee;
     }
 

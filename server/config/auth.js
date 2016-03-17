@@ -11,7 +11,7 @@ var Company = require('../models/Company');
 //authorizes requests by email and password - for login only
 passport.use(new BasicStrategy(
   function(email, password, callback) {
-    Employee.findOne({email:req.body.email}, function (err, user) {
+    Employee.findOne({email:email}, function (err, user) {
       if (err) { return callback(err); }
 
       // No user found with that username
@@ -32,7 +32,7 @@ passport.use(new BasicStrategy(
 ));
 
 //authorizes user requests for their own information by access token
-passport.use('user-bearer', new BearerStrategy(
+passport.use(new BearerStrategy(
   function(accessToken, callback) {
     Token.findOne({value: accessToken }, function (err, token) {
       if (err) { return callback(err); }

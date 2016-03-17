@@ -41,7 +41,7 @@ module.exports.template.create = function(req, res) {
 
     company.save(function(err, c) {
         if(err) {
-            return res.status(400).json({error: "Could Not Save"});
+            return res.status(400).json({error: "Can not Save"});
         }
         return res.status(200).json(showCompanyPublicInfo(c));
     });
@@ -157,5 +157,5 @@ function showCompanyPublicInfo(c){
         email: c.email,
         phone_number: c.phone_number,
         paid_time: c.paid_time
-    }
+    };
 }

@@ -8,36 +8,6 @@ var exports = module.exports;
 
 var Employee = require('../../models/Employee');
 
-function uid (len) {
-  var buf = []
-    , chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    , charlen = chars.length;
-
-  for (var i = 0; i < len; i++) {
-    buf.push(chars[getRandomInt(0, charlen - 1)]);
-  }
-
-  return buf.join('');
-};
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-exports.login = function(req, res) {
-  var token = new Token({
-    value: uid(256),
-    userId: req.user._id
-  });
-
-  token.save(function(err, t) {
-    if(err) {
-      return res.status(400).json({error: "Could not save access token."});
-    }
-    return res.status(200).json(t.toJSON());
-  });
-};
-
 exports.getAllEmployees = function(req, res) {
   Employee.find({company_id : req.params.id}, { password: 0}, function(err, result) {
     if(err){
@@ -118,3 +88,15 @@ exports.delete = function(req, res) {
     });
   });
 };
+
+function showEmployeePublicInfo(e){
+    return {
+        _id: e._id,
+        first_name: e.first_name,
+        last_name: e.last_name,
+        email: e.email,
+        phone_number: e.phone_number,
+        company_id: e.company_id,
+	role: e.role
+    };
+}

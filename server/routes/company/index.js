@@ -6,7 +6,7 @@ var authController = require('../../config/auth');
 
 var router = express.Router();
 
-router.post('/', authController.isBearerAuthenticated, controller.template.create);
+router.post('/', controller.template.create);
 router.get('/:id', authController.isBearerAuthenticated, controller.template.get);
 router.get('/', authController.isBearerAuthenticated, controller.template.getAll);
 router.put('/:id', authController.isBearerAuthenticated, controller.template.update);

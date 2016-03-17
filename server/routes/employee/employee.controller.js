@@ -2,23 +2,40 @@
 
 /*
  * This module is meant to house all of the API
- * routes that pertain to users
+ * routes that pertain to employees
  */
 var exports = module.exports;
 
 var Employee = require('../../models/Employee');
 
+function uid (len) {
+  var buf = []
+    , chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    , charlen = chars.length;
+
+  for (var i = 0; i < len; i++) {
+    buf.push(chars[getRandomInt(0, charlen - 1)]);
+  }
+
+  return buf.join('');
+};
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 exports.login = function(req, res) {
-    Employee.findOne({email:req.body.email}, function(err, e) {
-        if(err || !e){
-          return res.status(400).send({error: "Can not Find"});
-        }
-        if(!e.validPassword(req.body.password))
-          return res.status(400).send({error: "Incorrect Credentials"});
-        var employee_json=e.toJSON();
-        delete employee_json.password;
-        return res.status(200).json(employee_json);
-    });
+  var token = new Token({
+    value: uid(256),
+    userId: req.user._id
+  });
+
+  token.save(function(err, t) {
+    if(err) {
+      return res.status(400).json({error: "Could not save access token."});
+    }
+    return res.status(200).json(t.toJSON());
+  });
 };
 
 exports.getAllEmployees = function(req, res) {
@@ -47,11 +64,11 @@ exports.insert = function(req, res) {
     /* required info */
     employee.first_name = req.body.first_name;
     employee.last_name = req.body.last_name;
-    employee.email = req.body.email,
-    employee.phone_number  = req.body.phone_number,
-    employee.company_id = req.body.company_id,
-    employee.password = employee.generateHash(req.body.password),
-    employee.role =  req.body.role
+    employee.email = req.body.email;
+    employee.phone_number  = req.body.phone_number;
+    employee.company_id = req.body.company_id;
+    employee.password = employee.generateHash(req.body.password);
+    employee.role =  req.body.role;
 
     employee.save(function(err, e) {
         if(err) {

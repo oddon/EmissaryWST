@@ -28,6 +28,7 @@ function ajaxPostUser(url, data){
        dataType: 'json',
        success: function(response){
            console.log(response);
+	   localStorage.setItem('accessToken', response.value);
            if(response.role == 'a_admin'){
              localStorage.setItem('userState' , 2);
              location.href = '/admin-dashboard.html'
@@ -67,7 +68,7 @@ function ajaxGetCompanyInfo(url){
 //Grab user data from form
 function grabUserData(){
    var user = {};
-   user.email = $('#username').val();
+   user.username = $('#username').val();
    user.password = $('#password').val();
    return user;
 }

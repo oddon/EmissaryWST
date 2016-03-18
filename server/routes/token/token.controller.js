@@ -1,6 +1,7 @@
 'use strict';
 
 var tokenfile = require('../../models/token');
+var Employee = require('../../models/Employee');
 
 function uid (len) {
   var buf = []
@@ -29,6 +30,15 @@ module.exports.login = function(req, res) {
     if(err) {
       return res.status(400).json({error: "Could not save access token."});
     }
-    return res.status(200).json(t.toJSON());
+    var jsontoken = t.toJSON();
+    Employee.findById(jsontoken.userId, { password: 0}, function(err, employee) {
+      if(err) {
+          return res.status(400).json({error: "Can not Find"});
+      } else {
+	  var employeejson = employee.toJSON();
+	  employeejson.value = t.value;
+          return res.status(200).json(employeejson);
+      }
+    });
   });
 };

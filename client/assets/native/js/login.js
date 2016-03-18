@@ -4,7 +4,7 @@ $(function() {
        var userData = grabUserData();
        //alert(userData);
        event.preventDefault();
-       ajaxPostUser('/api/employees/login', userData);
+       ajaxPostUser('/api/tokens/login', userData);
        
    });
 });
@@ -24,10 +24,9 @@ function ajaxPostUser(url, data){
    $.ajax({
        type: "POST",
        url: url,
-       data: data,
-       dataType: 'json',
+       username: data.username,
+       password: data.password,
        success: function(response){
-           console.log(response);
 	   localStorage.setItem('accessToken', response.value);
            if(response.role == 'a_admin'){
              localStorage.setItem('userState' , 2);
@@ -58,7 +57,6 @@ function ajaxGetCompanyInfo(url){
        async: false,
        dataType: 'json',
        success: function(response){
-           console.log(response);
            //alert(response.name);
            localStorage.setItem('currentCompany', JSON.stringify(response));
        }

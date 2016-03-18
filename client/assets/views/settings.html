@@ -283,8 +283,23 @@
         <h2>Get Check-In Notifications Via Slack</h2>
         <a href="https://slack.com/oauth/authorize?scope=incoming-webhook,bot,chat:write:bot&client_id=11293703667.22923580850"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
 
-        <h2>Integrate Emissary with your own Appointment System</h2>
-	<!--	<h1>{{localStorage.getItem('accessToken')}}</h1> -->
+        <h2>Implement Emissary API</h2>
+			<button type="button" class="btn btn-primary btn-api" onClick="location.href='https://github.com/thiefjack/WebStormTroopers/wiki/07)-API#3-appointments';">API Documentation</button>
+			<button type="button" class="btn btn-primary btn-clip" onclick="copyAccess()">Copy Access Token to Clipboard</button>
+	<!--<div class="col-sm-12">
+		<div class="col-sm-6">
+		</div>
+		<div class="col-sm-6">
+		</div>
+	</div>-->
+	<p id='token'></p>
+	<script>
+	function copyAccess() {
+	  var tokentemp = localStorage.getItem('accessToken');
+	  document.getElementById('token').innerHTML = localStorage.getItem('accessToken');
+	  //window.clipboardData.setData("Text", tokentemp);
+	}
+	</script>
 
     </div>
 </div>

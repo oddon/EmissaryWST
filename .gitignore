@@ -1,6 +1,5 @@
 node_modules/
 bower_components
-dist/
 log/
 npm-debug.log
 .env
@@ -8,6 +7,8 @@ npm-debug.log
 .DS_Store
 server/log
 newrelic_agent.log
+
+**/dist/
 
 mobile/platforms/
 mobile/plugins/

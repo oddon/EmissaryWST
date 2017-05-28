@@ -1,7 +1,7 @@
 var winston = require('winston'),
     fs = require('fs'),
     path = require('path'),
-    logDir = path.join(process.cwd() , '/server/log/');
+    logDir = path.join(process.cwd() , '/backend/log/');
 
 winston.emitErrs = true;
 

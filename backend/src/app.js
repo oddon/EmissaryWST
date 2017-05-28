@@ -1,39 +1,59 @@
-'use strict';
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import errorHandler from 'errorhandler';
+import path from 'path';
+import http from 'http';
+import socketIO from './socket/socket';
+import socketIOInitialize from 'socket.io';
+import stripeInitializer from 'stripe';
+import slackHookInitializer from 'slack-notify';
+import config from './config/config';
+import winstonConfig from './config/winston';
+import configureRoutes from './routes';
+import connectToDatabase from './database';
 
-/*
- * Module dependencies.
- */
-var express = require('express');
-var router = express.Router();
-var cors = require('cors');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var errorHandler = require('errorhandler');
-var path = require('path');
-var mongoose = require('mongoose');
-var socketIO = require('./socket/socket');
-var MY_STRIPE_TEST_KEY = 'sk_test_dqzYJJ6xWGgg6U1hgQr3hNye';
-var stripe = require ('stripe')(MY_STRIPE_TEST_KEY);
-var MY_SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
-var slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
-//var oauthserver = require('oauth2-server');
-var newrelic = require('newrelic');
+// Stripe
+const MY_STRIPE_TEST_KEY = 'sk_test_dqzYJJ6xWGgg6U1hgQr3hNye';
+const stripe = stripeInitializer(MY_STRIPE_TEST_KEY);
+
+// Slack
+const MY_SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+const slack = slackHookInitializer(MY_SLACK_WEBHOOK_URL);
 
 
-/*
- * App configs
- */
-var config = require('./config/config');
-var validate = require('./config/validation');
-var winstonConfig = require("./config/winston");
+// Initialize the express server object (app) and configure it
+const app = express();
 
-/*
- * Create Express server.
- */
-var app = express();
-app.use(function(req, res, next) {
-    if (req.path.substr(-5) == '.html' && req.path.length > 1) {
+// Set the port
+app.set('port', config.port);
+
+// Allow parsing of the HTTP body with JSON format
+app.use(bodyParser.json());
+
+// Allow parsing of the HTTP body with urlencoded format
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Point static content serving
+app.use(express.static(path.join(__dirname, '../frontend')));
+app.use('/static', express.static(path.join(__dirname, '..', '..', 'frontend', 'static')));
+
+// Set view engine
+app.set('view engine', 'html');
+
+// Set up Cross-origin resource sharing (CORS)
+app.use(cors());
+
+// Use morgan for logging
+app.use(morgan('dev', {"stream": winstonConfig.stream}));
+
+// Set up error handling
+app.use(errorHandler());
+
+// Add middleware that removes .html endings from url paths
+app.use((req, res, next) => {
+    if (req.path.substr(-5) === '.html' && req.path.length > 1) {
         var query = req.url.slice(req.path.length);
         res.redirect(301, req.path.slice(0, -5) + query);
         //res.sendFile(path.join(__dirname,'../dist/assets/views/checkin.html'))
@@ -41,119 +61,27 @@ app.use(function(req, res, next) {
         next();
     }
 });
-app.use(morgan('dev', {"stream": winstonConfig.stream}));
 
-/*
- * setting up oath
- */
-/*app.oauth = oauthserver({
-    model: require('./models/Employee'),
-    grants: ['password'],
-    debug: true
-});
 
-app.all('/oauth/token', app.oauth.grant());
-app.get('/secret', app.oauth.authorise(), function (req, res) {
-    res.send('Secret area');
-});
-app.use(app.oauth.errorHandler());
-*/
+// Connect to the database
+connectToDatabase();
 
-/*
- * Connect to MongoDB.
- */
-mongoose.connect(config.mongoDBUrl);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-    console.log("Connected to mongolab");
-});
+// Set the routes
+configureRoutes(app);
 
-/*
- * Express configuration.
- */
-app.set('port', config.port);
+// Create an http server with the express server application
+const server = http.createServer(app);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../dist')));
-app.set('view engine', 'html');
-
-app.use(cors());
-require('./routes')(app);
-
-/*
- * Disable api auth if were are in dev mode
- */
-if(app.get('env') !== 'development') {
-  app.use('/api/*', validate);
-}
-
-const VIEW_PATH = path.join(__dirname, '..', 'dist');
-console.log('VIEW_PATH: ' + VIEW_PATH);
-
-app.get('/settings', function(req,res){
-  res.sendFile(`${VIEW_PATH}/settings.html`);
-});
-app.get('/admin-companies', function(req,res){
-  res.sendFile(`${VIEW_PATH}/admin-companies.html`);
-});
-app.get('/admin-dashboard', function(req,res){
-  res.sendFile(`${VIEW_PATH}/admin-dashboard.html`);
-});
-app.get('/analytics_raw', function(req,res){
-  res.sendFile(`${VIEW_PATH}/analytics_raw.html`);
-});
-app.get('/appointments', function(req,res){
-  res.sendFile(`${VIEW_PATH}/appointments.html`);
-});
-app.get('/checkin', function(req,res){
-  res.sendFile(`${VIEW_PATH}/checkin.html`);
-});
-app.get('/employees', function(req,res){
-  res.sendFile(`${VIEW_PATH}/employees.html`);
-});
-app.get('/forgot-password', function(req,res){
-  res.sendFile(`${VIEW_PATH}/forgot-password.html`);
-});
-app.get('/form-builder', function(req,res){
-  res.sendFile(`${VIEW_PATH}/form-builder.html`);
-});
-app.get('/login', function(req,res){
-  res.sendFile(`${VIEW_PATH}/login.html`);
-});
-app.get('/signup', function(req,res){
-  res.sendFile(`${VIEW_PATH}/signup.html`);
-});
-app.get('/visitors', function(req,res){
-  res.sendFile(`${VIEW_PATH}/visitors.html`);
-});
-app.get('/404', function(req,res){
-  res.sendFile(`${VIEW_PATH}/404.html`);
-});
-app.get('/admin-settings', function(req,res){
-  res.sendFile(`${VIEW_PATH}/admin-settings.html`);
-});
-app.get('/', function(req,res){
-  res.sendFile(`${VIEW_PATH}/index.html`);
-});
-/*
- * Error Handler.
- */
-app.use(errorHandler());
-
-var server = require('http').createServer(app);
-
-var io = require('socket.io')(server)
-server.listen(app.get('port'), function() {
+const io = socketIOInitialize(server);
+server.listen(app.get('port'), () => {
   console.log('Express server listening on port %d in %s mode',
     app.get('port'),
-    app.get('env'));
+    app.get('env')
+  );
 });
 
-/*
- * Create Socket.io server.
- */
-var server = socketIO.createServer(io);
+// Create Socket.io server.
+socketIO.createServer(io);
 
-module.exports = app;
+
+export default app;

@@ -4,7 +4,7 @@ $(document).ready(function($){
         label = $('#optional_label').val();
         console.log("value: " + label);
         var n = $('.text-box').length;
-        if( 2 < n ) {
+        if( 1 < n ) {
             alert('Max number of fields that can be added is 2');
             return false;
         }

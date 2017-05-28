@@ -10,7 +10,8 @@
   "scripts": {
     "postinstall": "bower install && gulp build:prod",
     "start": "nodemon server/app.js",
-    "test": "gulp test:server && gulp test:client"
+    "test": "gulp test:server && gulp test:client",
+    "watch-frontend": "gulp frontend:combined"
   },
   "dependencies": {
     "async": "0.9.0",

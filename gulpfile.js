@@ -26,3 +26,8 @@ gulp.task('backend:watch', () => {
   gulp.start('backend:babel');
   gulp.watch(paths.backend.es7, ['backend:babel'])
 });
+
+var dir = require('require-dir');
+
+dir('./gulp/', { recurse: true });
+

@@ -234,7 +234,10 @@ describe("Forms", function() {
 
 
     /********** PATIENT FORM TESTING **********/
-
+    let submittedFormId;
+    let submittedFormFirstName;
+    let submittedFormLastName;
+    let submittedFormEmail;
 
     describe("Submitted Forms", function() {
       describe('POST /api/form/visitorList', function(){

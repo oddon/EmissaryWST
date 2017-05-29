@@ -24,6 +24,7 @@ describe("Employee", function() {
         });
 
         var templateFormId = null;
+        let returnedId;
 
 
         describe("Employee Testing", function() {

@@ -30,6 +30,7 @@ describe("Visitor List Socket",function(){
     var appointment2;
     var visitor1;
     var client1;
+    let updateList;
 
     var today = new Date();
     today.setHours(0, 0, 0, 0);

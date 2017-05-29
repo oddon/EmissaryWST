@@ -9,7 +9,7 @@ const paths = {
     es7: path.join(__dirname, 'backend', 'src', '**/*.js'),
     dist: path.join(__dirname, 'backend', 'dist'),
   },
-}
+};
 
 // Gulp task to compile ES2017 code to ES2015 code with babel
 gulp.task('backend:babel', () => gulp
@@ -26,7 +26,3 @@ gulp.task('backend:watch', () => {
   gulp.start('backend:babel');
   gulp.watch(paths.backend.es7, ['backend:babel'])
 });
-
-var dir = require('require-dir');
-
-dir('./gulp/', { recurse: true });

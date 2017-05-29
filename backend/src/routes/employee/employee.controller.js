@@ -89,6 +89,7 @@ exports.update = function(req, res) {
 };
 
 exports.delete = function(req, res) {
+  console.log('mark', req.params);
   Employee.findById(req.params.id, function(err, employee) {
     return employee.remove(function(err) {
       if(err) {

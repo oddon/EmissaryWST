@@ -9,7 +9,7 @@
   "author": "Anthony Altieri (2.0.0), Eduardo Aguilar (1.0.0)",
   "scripts": {
     "start": "nodemon backend/dist/app.js",
-    "test": "gulp test:server && gulp test:client",
+    "test": "gulp test:server",
     "watch-frontend": "gulp frontend:combined",
     "watch-backend": "gulp backend:watch",
     "build-backend": "gulp backend:babel"

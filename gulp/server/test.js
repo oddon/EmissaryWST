@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 
 /* This will run our mocha tests */
 gulp.task('test:server', function(){
-   return gulp.src('./server/test/*.js', {read: false})
+   return gulp.src('./backend/dist/test/*.js', {read: false})
     .pipe(mocha({reporter: 'spec'}))
     .pipe(exit());
 });

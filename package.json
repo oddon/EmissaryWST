@@ -8,6 +8,7 @@
   },
   "author": "Anthony Altieri (2.0.0), Eduardo Aguilar (1.0.0)",
   "scripts": {
+    "postinstall": "gulp backend:babel",
     "start": "nodemon backend/dist/app.js",
     "test": "echo hi",
     "test-real": "gulp test:server",

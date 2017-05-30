@@ -3,7 +3,6 @@ node_js:
 - iojs
 env:
 - NODE_ENV=production
-before_script: npm run buildTest
 script: npm test
 deploy:
   provider: heroku

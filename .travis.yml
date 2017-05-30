@@ -1,8 +1,9 @@
 language: node_js
 node_js:
-- iojs
+  - "iojs"
+  - "6"
 env:
-- NODE_ENV=production
+  - NODE_ENV=production
 script: npm test
 deploy:
   provider: heroku

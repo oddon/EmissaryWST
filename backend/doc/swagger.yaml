@@ -1,0 +1,317 @@
+swagger: '2.0'
+info:
+  description: >-
+    Emissary, welcome your guests. Emissary welcomes visitors with a simple, yet
+    effective check-in process. It is all about making each step simpler and
+    more efficient.
+  version: 1.0.0
+  title: Emmissary 2.0
+host: webstormtroopers.herokuapp.com
+basePath: /index
+tags:
+  - name: visitors
+    description: Manage visitors
+  - name: employees
+    description: Manage employees
+  - name: appointments
+    description: Manage appointments
+  - name: forms
+    description: Create and edit forms
+schemes:
+  - http
+paths:
+  /visitors:
+    get:
+      tags:
+        - visitors
+      summary: Get the visitors of a company
+      description: Use company_id to get the people visiting a company
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: company_id
+          in: query
+          description: company_id to get visitors of
+          required: true
+          type: integer
+      responses:
+        '400':
+          description: 'Error Message, Company does not exist'
+  /employees:
+    get:
+      tags:
+        - employees
+      summary: Manage employees
+      description: Mange the employees of the company
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: company_id
+          in: query
+          description: company_id to get employees of
+          required: true
+          type: integer
+      responses:
+        '400':
+          description: 'Error Message, Company does not exist'
+  /employees/add_employee:
+    post:
+      tags:
+        - employees
+      summary: Adds an employee to the company roster
+      description: Add an employee
+      operationId: addEmployee
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: company_id
+          in: query
+          description: company_id to get employees of
+          required: true
+          type: integer
+        - in: formData
+          name: firstname
+          required: true
+          type: string
+          description: A person's first name.
+        - in: formData
+          name: lastname
+          required: true
+          type: string
+          description: A person's last name.
+        - in: formData
+          name: email
+          required: true
+          type: string
+          description: A person's email.
+        - in: formData
+          name: phone
+          required: true
+          type: integer
+          description: A person's phone.
+        - in: formData
+          name: password
+          required: true
+          type: string
+          description: A person's password.
+      responses:
+        '400':
+          description: 'Error Message, Company does not exist'
+  /appointments:
+    get:
+      tags:
+        - appointments
+      summary: Manage appointments
+      description: Manage the appointments of the company
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: company_id
+          in: query
+          description: company_id to get appointments of
+          required: true
+          type: integer
+      responses:
+        '400':
+          description: 'Error Message, Company does not exist'
+  /appointments/add_appointment:
+    post:
+      tags:
+        - appointments
+      summary: Adds an appointment to the company
+      description: Add an appointment
+      operationId: addAppointment
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: company_id
+          in: query
+          description: company_id to get appointments of
+          required: true
+          type: integer
+        - in: formData
+          name: firstname
+          required: true
+          type: string
+          description: A person's first name.
+        - in: formData
+          name: lastname
+          required: true
+          type: string
+          description: A person's last name.
+        - in: formData
+          name: phone
+          required: true
+          type: integer
+          description: A person's phone.
+        - in: formData
+          name: providerName
+          required: true
+          type: string
+          description: Provider's name.
+        - in: formData
+          name: date
+          required: true
+          type: string
+          description: Date of appointment.
+        - in: formData
+          name: time
+          required: true
+          type: string
+          description: Time of appointment.
+      responses:
+        '400':
+          description: 'Error Message, Company does not exist'
+  /forms:
+    get:
+      tags:
+        - forms
+      summary: Forms creater and editor
+      description: ''
+      operationId: getForm
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: company_id
+          description: Company of form to retrieve
+          required: true
+          type: integer
+      responses:
+        '400':
+          description: 'Error Message, Company does not exist'
+definitions:
+  Appointments:
+    type: object
+    properties:
+      first_name:
+        type: string
+        required: true
+      last_name:
+        type: string
+        required: true
+      phone_number:
+        type: string
+        required: true
+      date:
+        type: date
+        required: true
+      provider_name:
+        type: string
+        required: true
+      company_id:
+        type: Schema.Types.ObjectId
+        ref: Company
+        required: true
+  Company:
+    type: object
+    properties:
+      email:
+        type: string
+        unique: true
+        index: true
+        required: true
+      name:
+        type: string
+        required: true
+      phone_number:
+        type: string
+        required: true
+      paid_time:
+        type: date
+        required: true
+  Employee:
+    type: object
+    properties:
+      first_name:
+        type: string
+        required: true
+      last_name:
+        type: string
+        required: true
+      email:
+        type: string
+        unique: true
+        index: true
+        required: true
+      password:
+        type: string
+        required: true
+      phone_number:
+        type: string
+        required: true
+      role:
+        type: string
+        required: true
+      company_id:
+        type: Schema.Types.ObjectId
+        ref: Company
+        required: true
+  Theme:
+    type: object
+    properties:
+      user_id:
+        type: string
+      form_color:
+        type: string
+      background_img:
+        type: string
+      displayPhone:
+        type: boolean
+      displayClock:
+        type: boolean
+      displaySignature:
+        type: boolean
+      additionalComments:
+        type: boolean
+  Visitor:
+    type: object
+    required:
+      - name
+      - photoUrls
+    properties:
+      company_id:
+        type: Schema.Types.ObjectId
+        ref: Company
+        required: true
+      first_name:
+        type: string
+        required: true
+      last_name:
+        type: string
+        required: true
+      phone_number:
+        type: string
+        required: true
+      checkin_time:
+        type: Date
+        default: Date.now
+        required: true
+      appointments:
+        type: appointmentSchema
+      additional_info:
+        type: string
+        default: {}
+  VisitorList:
+    type: object
+    properties:
+      company_id:
+        type: Schema.Types.ObjectId
+        ref: Company
+        required: true
+      visitors:
+        type: visitorSchema
+        default: []

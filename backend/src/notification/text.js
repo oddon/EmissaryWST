@@ -8,8 +8,8 @@ var bodyparser = require('body-parser');
 var twilio = require('twilio');
 
 // Twilio Credentials 
-var accountSid = 'ACb70bc33c96bfc11985cbd1cf76a239ef'; 
-var authToken = '452f1f1d86c183097a96db390ca55590'; 
+var accountSid = 'AC09788df6478ec798673fddaa4236ec4c';
+var authToken = 'd12636a544c81c07c7441d9795faa624';
  
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 

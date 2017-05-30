@@ -3,6 +3,7 @@ node_js:
   - "6"
 env:
   - NODE_ENV=production
+before_script: npm run build-backend
 script: npm test
 deploy:
   provider: heroku

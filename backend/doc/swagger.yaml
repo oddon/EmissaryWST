@@ -6,7 +6,7 @@ info:
     more efficient.
   version: 1.0.0
   title: Emmissary 2.0
-host: webstormtroopers.herokuapp.com
+host: team1-emissary.herokuapp.com
 basePath: /index
 tags:
   - name: visitors
@@ -39,88 +39,189 @@ paths:
         '400':
           description: 'Error Message, Company does not exist'
   /employees:
-    get:
-      tags:
-        - employees
-      summary: Manage employees
-      description: Mange the employees of the company
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - name: company_id
-          in: query
-          description: company_id to get employees of
-          required: true
-          type: integer
-      responses:
-        '400':
-          description: 'Error Message, Company does not exist'
-  /employees/add_employee:
     post:
       tags:
         - employees
       summary: Adds an employee to the company roster
       description: Add an employee
-      operationId: addEmployee
       consumes:
         - application/x-www-form-urlencoded
       produces:
         - application/xml
         - application/json
       parameters:
-        - name: company_id
-          in: query
-          description: company_id to get employees of
+        - in: body
+          name: body 
+          description: Employee object that needs to be added to a company
           required: true
-          type: integer
-        - in: formData
-          name: firstname
-          required: true
-          type: string
-          description: A person's first name.
-        - in: formData
-          name: lastname
-          required: true
-          type: string
-          description: A person's last name.
-        - in: formData
-          name: email
-          required: true
-          type: string
-          description: A person's email.
-        - in: formData
-          name: phone
-          required: true
-          type: integer
-          description: A person's phone.
-        - in: formData
-          name: password
-          required: true
-          type: string
-          description: A person's password.
+          schema:
+            $ref: '#definitions/Employee'
       responses:
         '400':
-          description: 'Error Message, Company does not exist'
-  /appointments:
+          description: 'Error Message, Can not Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Employee'
+  /employees/getAllEmployees:
     get:
       tags:
-        - appointments
-      summary: Manage appointments
-      description: Manage the appointments of the company
+        - employees
+      summary: Retrieves all employees in company roster
+      description: Get all employees
       produces:
         - application/xml
         - application/json
       parameters:
         - name: company_id
           in: query
-          description: company_id to get appointments of
+          description: company_id to get employees of
           required: true
           type: integer
       responses:
         '400':
-          description: 'Error Message, Company does not exist'
-  /appointments/add_appointment:
+          description: 'Error Message, Can not find'
+        '200':
+          description: 'Successful Operation'
+          schema: 
+            $ref: '#definitions/Employee'
+  
+  /employees/{employeeid}:
+    get:
+      tags:
+        - employees
+      summary: Gets employee information in a company roster by id
+      description: Gets employee's information
+      operationId: getById
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: employeeid
+          in: path
+          description: Employee id
+          type: integer
+          required: true
+      responses:
+        '400':
+          description: 'Error Message, Cannot find'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Employee'
+    put:
+      tags:
+        - employees
+      summary: Updates employee information in a company roster
+      description: Updates an employee's information
+      operationId: update
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: employeeid
+          in: path
+          description: Employee id
+          type: integer
+          required: true
+        - name: first_name
+          in: formData
+          required: false
+          type: string
+          description: A person's first name.
+        - name: last_name
+          in: formData
+          required: false
+          type: string
+          description: A person's last name.
+        - name: email
+          in: formData
+          required: false
+          type: string
+          description: A person's email.
+        - name: phone_number
+          in: formData
+          required: false
+          type: integer
+          description: A person's phone.
+        - name: password
+          in: formData
+          required: false
+          type: string
+          description: A person's password.
+        - name: role
+          in: formData
+          required: false
+          type: string
+          description: A person's role.
+      responses:
+        '400':
+          description: 'Error Message, Employee does not exist'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Employee'
+    delete:
+      tags:
+        - employees
+      summary: Removes an employee's information from a company roster
+      description: Updates an employee's information
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: employeeid
+          in: path
+          description: Employee id
+          type: integer
+          required: true
+      responses:
+        '400':
+          description: 'Error Message, Emploee does not exist'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Employee' 
+  /employees/login:
+    get:
+      tags: 
+        - employees
+      summary: Logs employee into the system
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: The email of the employee for login
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: The password for login
+          required: true
+          type: string
+      responses:
+        '200': 
+          description: 'Successful Operation'
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+  /appointments:
     post:
       tags:
         - appointments
@@ -133,44 +234,274 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - name: company_id
-          in: query
-          description: company_id to get appointments of
-          required: true
-          type: integer
-        - in: formData
-          name: firstname
-          required: true
-          type: string
-          description: A person's first name.
-        - in: formData
-          name: lastname
-          required: true
-          type: string
-          description: A person's last name.
-        - in: formData
-          name: phone
-          required: true
-          type: integer
-          description: A person's phone.
-        - in: formData
-          name: providerName
-          required: true
-          type: string
-          description: Provider's name.
-        - in: formData
-          name: date
-          required: true
-          type: string
-          description: Date of appointment.
-        - in: formData
-          name: time
-          required: true
-          type: string
-          description: Time of appointment.
+        - in: body
+          name: body
+          schema:
+            $ref: '#definitions/Appointments'
+          required: true  
       responses:
         '400':
-          description: 'Error Message, Company does not exist'
+          description: 'Error Message, Could not find company or save or already created'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Employee'
+  /appointments/getAll:
+    get:
+      tags:
+        - appointments
+      summary: Retrieves all appointments in company 
+      description: Get all appointments
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: company_id
+          in: query
+          description: Company id of where appointments are registered
+          required: true
+          type: integer
+      responses:
+        '400':
+          description: 'Error Message, Can not find'
+        '200':
+          description: 'Successful Operation'
+          schema: 
+            $ref: '#definitions/Appointments'   
+  /appointments/{appointmentid}:
+    get:
+      tags:
+        - appointments
+      summary: Gets appointment information in a company roster by id
+      description: Gets appointment information
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: appointmentid
+          in: path
+          description: Appointment id
+          type: integer
+          required: true
+      responses:
+        '400':
+          description: 'Error Message, Can not find'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Appointments'
+    put:
+      tags:
+        - employees
+      summary: Updates appointment information in a company roster
+      description: Updates an appointment's information
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: appointmentid
+          in: path
+          description: Appointment id
+          type: integer
+          required: true
+        - name: first_name
+          in: formData
+          required: false
+          type: string
+          description: A person's first name.
+        - name: last_name
+          in: formData
+          required: false
+          type: string
+          description: A person's last name.
+        - name: phone_number
+          in: formData
+          required: false
+          type: string
+          description: A person's phone number.
+        - name: date
+          in: formData
+          required: false
+          type: string
+          description: Date of appointment.
+        - name: provider_name
+          in: formData
+          required: false
+          type: string
+          description: A person's insurance provider.
+      responses:
+        '400':
+          description: 'Error Message, Could not Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Appointments'
+    delete:
+      tags:
+        - appointments
+      summary: Removes an appointments information from a company roster
+      description: Deletes an appointment
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: appointmentid
+          in: path
+          description: Appointment id
+          type: integer
+          required: true
+      responses:
+        '400':
+          description: 'Error Message,Could Not Find or Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Appointments'   
+  /company:
+    post:
+      tags:
+        - company
+      summary: Adds a company 
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body 
+          description: Company object that needs to be added 
+          required: true
+          schema:
+            $ref: '#definitions/Company'
+      responses:
+        '400':
+          description: 'Error Message, Can not Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Company'
+  /company/{companyid}:
+    get:
+      tags:
+        - company
+      summary: Gets company information by id
+      description: Gets company's information
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: companyid
+          in: path
+          description: Company id
+          type: integer
+          required: true
+      responses:
+        '400':
+          description: 'Error Message, Cannot Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Company'
+    put:
+      tags:
+        - company
+      summary: Updates company information 
+      description: Updates an company's information
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: companyid
+          in: path
+          description: Company id
+          type: integer
+          required: true
+        - name: email
+          in: formData
+          required: false
+          type: string
+          description: A company's email.
+        - name: name
+          in: formData
+          required: false
+          type: string
+          description: Name of company.
+        - name: phone_number
+          in: formData
+          required: false
+          type: string
+          description: A company's phone number.
+      responses:
+        '400':
+          description: 'Error Message, Can not Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Company'
+    delete:
+      tags:
+        - company
+      summary: Removes an company's information 
+      description: Deletes a company's information
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: companyid
+          in: path
+          description: Company id
+          type: integer
+          required: true
+      responses:
+        '400':
+          description: 'Error Message, Could Not Find or Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Company' 
+  /company/reset:
+    put:
+      tags:
+        - company
+      summary: Resets a company's credentials as undefined
+      operationId: resetCredentials
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: email
+          in: formData
+          required: true
+          type: string
+          description: A company user's email. 
+        - name: password
+          in: formData
+          required: true
+          type: string
+          description: A company user's email.
+      responses:
+        '400':
+          description: 'Error Message, Wrong Password orCan not Save'
+        '200':
+          description: 'Successful Operation'
+          schema:
+            $ref: '#definitions/Company'          
+            
   /forms:
     get:
       tags:
@@ -196,70 +527,67 @@ paths:
 definitions:
   Appointments:
     type: object
+    required:
+      - first_name
+      - last_name
+      - phone_number
+      - date
+      - provider_name
+      - company_id
     properties:
       first_name:
         type: string
-        required: true
       last_name:
         type: string
-        required: true
       phone_number:
         type: string
-        required: true
       date:
-        type: date
-        required: true
+        type: string
       provider_name:
         type: string
-        required: true
       company_id:
-        type: Schema.Types.ObjectId
-        ref: Company
-        required: true
+        $ref: '#definitions/Company'
   Company:
     type: object
+    required:
+      - email
+      - name
+      - phone_number
+      - paid_time
     properties:
       email:
         type: string
-        unique: true
-        index: true
-        required: true
       name:
         type: string
-        required: true
       phone_number:
         type: string
-        required: true
       paid_time:
-        type: date
-        required: true
+        type: string
   Employee:
     type: object
+    required:
+      - first_name
+      - last_name
+      - email
+      - password
+      - phone_number
+      - role
+      - company_id
     properties:
       first_name:
         type: string
-        required: true
       last_name:
         type: string
-        required: true
       email:
         type: string
-        unique: true
-        index: true
-        required: true
       password:
         type: string
-        required: true
       phone_number:
         type: string
-        required: true
       role:
         type: string
-        required: true
       company_id:
-        type: Schema.Types.ObjectId
-        ref: Company
-        required: true
+        $ref: '#definitions/Company'
   Theme:
     type: object
     properties:
@@ -280,38 +608,34 @@ definitions:
   Visitor:
     type: object
     required:
-      - name
-      - photoUrls
+      - company_id
+      - first_name
+      - last_name
+      - checkin_time
     properties:
       company_id:
-        type: Schema.Types.ObjectId
-        ref: Company
-        required: true
+        $ref: '#definitions/Company'
       first_name:
         type: string
-        required: true
       last_name:
         type: string
-        required: true
       phone_number:
         type: string
-        required: true
       checkin_time:
-        type: Date
+        type: string
         default: Date.now
-        required: true
       appointments:
-        type: appointmentSchema
+        $ref: '#definitions/Appointments'
       additional_info:
         type: string
         default: {}
   VisitorList:
     type: object
+    required:
+      - company_id
     properties:
       company_id:
-        type: Schema.Types.ObjectId
-        ref: Company
-        required: true
+        $ref: '#definitions/Company'
       visitors:
-        type: visitorSchema
-        default: []
+        $ref: '#definitions/Visitor'
+        

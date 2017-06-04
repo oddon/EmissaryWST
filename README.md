@@ -1,37 +1,37 @@
-# robo_betty_alpha [![Build Status](http://52.53.230.212/app/rest/builds/buildType:(WebStormTroopers_TestBuild)/statusIcon)](http://52.53.230.212/app/rest/builds/buildType:(WebStormTroopers_TestBuild)/statusIcon) [![Issue Count](https://codeclimate.com/repos/569c2b0f94fc544cff000d1e/badges/3c82fb1515f0966eb37e/issue_count.svg)](https://codeclimate.com/repos/569c2b0f94fc544cff000d1e/feed)
+# Team 1 Emissary
 
-# Update 1/12/16 for CSE112 Winter 2016 Students
-Use https://cse112bluejay.herokuapp.com/ to access last years version of the app. Happy Refactoring!
+### Currently deployed on: 
+https://team1-emissary.herokuapp.com/
 
-# How to install
-1. `npm install -g gulp bower foreman`
-2. make sure you are in the robo_betty_alpha repo dir
-3. `npm install`
-4. If npm install fails, try to remove the `node_modules` dir and `client/bower_components` dir
+### Staging site here:
+https://cse112-1-staging.herokuapp.com/
 
+## 1. Getting Started
+**Emissary is a visitor check-in SaaS application targetted for small businesses.**
+- Sign up your company and your own personal account for your company. 
+- Thereafter, add employees to your company through the "Employees" section of the application to provide them access to the application. 
+- Create appointments through the "Appointments" page. Open up the Check-in mode by clicking on the gear in the upper right-hand corner.
+- As visitors check-in, they will show up in the queue on the "Visitors" page. 
+- If there is an appointment that matches their information, their appointment time will automatically be populated.
+- Click on a visitor to check him/her out. If he/she had an appointment, their appointment will automatically be removed from the "Appointments" section.
 
-# You will need a .env file. Ask team leads about this
-1. the .env file will go in the root directory of the app
-2. it will be used to store server configurations
-3. __This .env file should never be pushed to github__
+  
 
-# How to run frontend portion only
-1. `gulp frontend`
+### 1.1 List of Requirements
+1. **Node.js** (http://nodejs.org/)
+2. **MongoDB** (https://www.mongodb.org/)
+3. **HandleBars** (http://handlebarsjs.com/)
+4. **jQuery** (https://jquery.com/)
 
-This will launch a server that will host your angular app.
-This server will solely serve your angular files. This will not run our backend.
-This server will also be updated when you changed one of the source files.
+### 1.2 Instructions
+**Step 1:** Do a `git clone` on our project on **Github** (https://github.com/AnthonyAltieri/EmissaryWST/).
 
-# How to run backend portion only
-1. `gulp backend`
+**Step 2:** Run `npm install` in the directory of the project to install the dependency for the backend.
 
-This will only start up the backend. You can use this to quickly test API
-routes.
+**Step 3:** Run `gulp test:server` to test the backend API.
 
-# How To run entire app with our backend
-1. `gulp build:dev`
-2. `nf start web`
+**Prestep 4:** Run `gulp test:client-setup` to setup local e2e testing (ONLY DO THIS ONCE).
 
-# If you want to run our backend while watching for changes to the frontend
-1. Run our entire app with our backend with the steps above
-2. In a separate terminal run `gulp frontend:combined`
+**Step 4:** Run `gulp test:client` to run e2e tests.
+
+**Step 5:** Run `npm start` to start the application.

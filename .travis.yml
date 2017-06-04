@@ -1,8 +1,6 @@
 language: node_js
 node_js:
-  - "6"
-env:
-  - NODE_ENV=production
+  - 6
 before_script: npm run build-backend
 script: npm test
 deploy:
@@ -11,3 +9,8 @@ deploy:
     secure: XtuyhatEO6k+AfqAnFhdtilM/tK8zJsF9lDxE4jBXQeWUhAMRD8sd/f1PY1DF6pJp6+0KB5gbqG8UXSwI4f0AnaKjjIZcW+qTqMOY9G3WPShhmRv64k7qwGYQgIoSD36G26xiLurQ2iXUlA8fhtluL1ULXsd7TfMz+y9wDzE6WV0KHEHdHcvFQ2NjjV96PMXwwO+m2Vs4TvnVdAHjQ6r3fxwI3Aqs1vnlZ3/3v0y+QSvDy0un9tpGFdmuGqBHju+/7m2e0/aSvey5iJull7RnMn+KdS5RN0i6DckZxluZfLn5vwpf8k7fMryyhzE7FZptab802GvYNX6ikjhsEnaiXKLrDo2hSTsV2QqPzefNHx05RJwNGixNFSoWHhljhEyILnD6RTI9ZYF6vblbVQ0YTANeDXVrJT6Mm5C8Tqjc4Xyuvkx0K9vKGDnnpPxdrkrr7eOWG+BrfTjWJwwhAPY9i96PKd/MgrnldlKjbwx/c9aBKsKo+lFp5SzDKTmkD9vkPZLpE0VZOpsLmfmN5r0QjW6MRD+JTCA37/o6LTXJLmEqff39GLOL68uJ0zYouQulwho30mR0rV/9m1+hzH2SrmkSo1+1TWOmSdlTEvBRFhVaytm9N39BxYtv7HiW4vT3GHJ21Ex3FetUvNo/6bhHpcaP2wxzImv2uBVOM8yG88=
   app: team1-emissary
   on: master
+  - provider: heroku
+    api_key:
+      secure: IdyijND9q6sdDIVD6KHlMKRhPulc5ZeDR27RFvdo9UNibag/esU5IpDvQeUY2DBGN2A670vMtprlbAC4J4ybi7NUIVsTBDc9UfvWoQbOhNpNTInbNdsedVWjlOzoRMCOJJcTPJ5KqE1i+QyiEmUkUr0fNDf2jv96BSGb/De4HmZeRmifYzwjvdJSX2Ehne6/KmBrklo4wz+PW6XUOSZ4PxZ2NA7FWn7EDN2A4DXZ17c2HJqUvYR9GbuUIC5HFiW9A4ZjdRW7ShNeycQ6pk7t907TNvBAmgaZhc2h1UcXU1h1FyMM9L4v8PQOwE89qyPnPUfW5EkkkhnCylTfCL56uyJsMqd5VDj4O3yu54fkLzahHR9PqnIQ2noY6vTmeMxiziz3ET7XYJBmpmjIIJWIirVWlDFYG6H1Nn2vuQZi30TdHXl2m2SOTIiG9e3mahd6Ba+VmciF8cNgTJwsVFGbzMKuGcRCNV2+P/GCo5pRn6+eqzGc07Z61cOFP8HE9V6QF2fZjOuDanx6iNrjAlU5MYJWu7pbaPWQfTa1+bXJrPSH4t4YfERx/tF2PgM6tAJxunVLEqGVtTteRbBYtbHdkbGnBjXK6cJ0eiU32GieY3X9nE+T6vuWP88LTiNHUOszIfZVOoNR4iXJigZJUEwWB5XDOSA9F+T2Oxs8TdIqT4I=
+    app: cse112-1-staging
+    on: develop

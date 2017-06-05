@@ -159,7 +159,9 @@ exports.create = function(param, callback){
                 list.visitors.push(visitor);
                 list.save(function(err){
                     if(err) return callback({error: "an error in saving"}, null);
-
+                    if(the_appointment == undefined){
+                        return callback(null, list); 
+                    }
                     the_appointment.is_checkedin = true;
                     the_appointment.save(function (err, checkedin_appointment){
                         if(err) return callback({error: "an error in saving"}, null);

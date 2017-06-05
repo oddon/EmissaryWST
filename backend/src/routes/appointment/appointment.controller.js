@@ -16,6 +16,7 @@
  * when front end is served from a something other than our app server.
  */
 var Appointment = require('../../models/Appointment');
+var Text = require('../../notification/text');
 
 /****** Company TEMPLATE ROUTES ******/
 module.exports.template = {};
@@ -41,9 +42,14 @@ module.exports.template.create = function(req, res) {
             if(err) return res.status(400).json({error: "Could Not Find"});
             if(appointments.length==0) {
                 appointment.save(function (err, a) {
+
                     console.log(err);
+
                     if (err)
                         return res.status(400).json({error: "Could Not Save"});
+
+
+
                     return res.status(200).json(a);
                 });
             }else{

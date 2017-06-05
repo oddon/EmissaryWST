@@ -20,6 +20,7 @@ class Header extends Component {
     const {
       pathname,
       navigate,
+      navigateAndHideOverlay,
       isOverlayVisible,
       overlayMode,
       hideOverlay,
@@ -58,31 +59,37 @@ class Header extends Component {
           <RaisedButton
             label="Metrics"
             className="headerOverlayButton"
+            onTouchTap={() => navigateAndHideOverlay('/employee/')}
             primary
           />
           <RaisedButton
             label="Visitors"
             className="headerOverlayButton"
+            onTouchTap={() => navigateAndHideOverlay('/employee/visitors')}
             primary
           />
           <RaisedButton
             label="Employees"
             className="headerOverlayButton"
+            onTouchTap={() => navigateAndHideOverlay('/employee/employees')}
             primary
           />
           <RaisedButton
             label="Appointments"
             className="headerOverlayButton"
+            onTouchTap={() => navigateAndHideOverlay('/employee/appointments')}
             primary
           />
           <RaisedButton
             label="Forms"
             className="headerOverlayButton"
+            onTouchTap={() => navigateAndHideOverlay('/employee/forms')}
             primary
           />
           <RaisedButton
             label="Settings"
             className="headerOverlayButton"
+            onTouchTap={() => navigateAndHideOverlay('/employee/settings')}
             primary
           />
         </OverlayCard>
@@ -99,6 +106,10 @@ const stateToProps = (s) => ({
 
 const dispatchToProps = (d) => ({
   navigate: (url) => d(push(url)),
+  navigateAndHideOverlay: (url) => {
+    d(push(url));
+    d(OverlayActions.hideOverlay());
+  },
   showOverlay: (mode) => d(OverlayActions.showOverlay(mode)),
   hideOverlay: () => d(OverlayActions.hideOverlay()),
 });

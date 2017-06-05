@@ -48,7 +48,7 @@ module.exports.template.create = function(req, res) {
                     if (err)
                         return res.status(400).json({error: "Could Not Save"});
 
-                    Text.sendText(appointment.first_name + appointment.last_name, [{phone_number: '5014139826'}], false);
+
 
                     return res.status(200).json(a);
                 });

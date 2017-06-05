@@ -15,7 +15,7 @@ var authToken = 'd12636a544c81c07c7441d9795faa624';
 var client = require('twilio')(accountSid, authToken); 
 var exports = module.exports;
 
-// sendText: Send text message to employees when visitorList is checked in.
+// sendText: Send text message to employees when a visitor makes an appointment
 module.exports.sendText = function(patientName, employees, done) {
   if(employees === null || (employees.length <= 0)) {
     if(done) return done();

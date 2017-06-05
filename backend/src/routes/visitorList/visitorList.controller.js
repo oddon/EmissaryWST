@@ -124,10 +124,18 @@ exports.create = function(param, callback){
         first_name: first_name,
         last_name: last_name,
         phone_number: phone_number,
-        date: {$gte:today, $lt: tomorrow}
+        is_checkedin: false
+       
     };
 
-    Appointment.find(query, function(err, appointments){
+    Appointment.find(query).sort({date: -1}).exec(function(err, appointments){
+        console.log(appointments);
+        var applist = [];
+        var the_appointment = undefined;
+        if(appointments.length > 0){
+            applist.push(appointments[0]);
+            the_appointment = appointments[0];
+        }
         var visitor =
         {
             company_id: company_id,
@@ -136,7 +144,7 @@ exports.create = function(param, callback){
             phone_number: phone_number,
             checkin_time: checkin_time,
             additional_info: additional_info,
-            appointments: appointments
+            appointments: applist
         };
         VisitorList.findOne(
             {company_id: company_id},
@@ -151,7 +159,15 @@ exports.create = function(param, callback){
                 list.visitors.push(visitor);
                 list.save(function(err){
                     if(err) return callback({error: "an error in saving"}, null);
-                    return callback(null, list);
+                    if(the_appointment == undefined){
+                        return callback(null, list); 
+                    }
+                    the_appointment.is_checkedin = true;
+                    the_appointment.save(function (err, checkedin_appointment){
+                        if(err) return callback({error: "an error in saving"}, null);
+                        return callback(null, list);
+                    });
+                    
                     /*Employee.find({company : req.body.company_id},
                      function(err, employees) {
                      var i = 0;

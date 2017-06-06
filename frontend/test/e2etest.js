@@ -48,16 +48,40 @@ test.describe("Landing Page", function() {
        this.timeout(mochaTimeOut);
        driver.get(site)
            .then(() => driver.getTitle())
-           .then(title => title.should.equal('Landing Page'))
+           .then(title => title.should.equal('Emissary'))
+           .then(() => driver.getCurrentUrl())
+           .then(URL => URL.should.equal(site))
    });
-
+   test.it("Checks features menu link", function() {
+       this.timeout(mochaTimeOut);
+       driver.get(site)
+           .then(() => driver.findElement(By.linkText('FEATURES')).click())
+           .then(() => driver.getCurrentUrl())
+           .then(URL => URL.should.equal(site + '#features'))
+   });
+   test.it("Checks pricing menu link", function() {
+       this.timeout(mochaTimeOut);
+       driver.get(site)
+           .then(() => driver.findElement(By.linkText('PRICING')).click())
+           .then(() => driver.getCurrentUrl())
+           .then(URL => URL.should.equal(site + '#pricing'))
+   });
+   test.it("Checks home menu link", function() {
+       this.timeout(mochaTimeOut);
+       driver.get(site)
+           .then(() => driver.findElement(By.linkText('FEATURES')).click())
+           .then(() => driver.findElement(By.linkText('PRICING')).click())
+           .then(() => driver.findElement(By.linkText('HOME')).click())
+           .then(() => driver.getCurrentUrl())
+           .then(URL => URL.should.equal(site))
+   });
 });
 
 test.describe("Log In Page", function() {
     test.it("Log in page loads", function() {
        this.timeout(mochaTimeOut);
        driver.get(site)
-            .then(() => driver.findElement(By.linkText('LOG IN')).click())
+            .then(() => driver.findElement(By.linkText('LOGIN')).click())
             .then(() => driver.getCurrentUrl())
             .then(URL => URL.should.equal(site + 'login'))
     });
@@ -67,13 +91,30 @@ test.describe("Register Page", function() {
    test.it("Checks Register Page Loads", function() {
       this.timeout(mochaTimeOut);
       driver.get(site)
-          .then(() => driver.findElement(By.linkText('LOG IN')).click())
+          .then(() => driver.findElement(By.linkText('SIGN-UP')).click())
           .then(() => driver.getCurrentUrl())
-          .then(URL => URL.should.equal(site +'login'))
-          .then(() => driver.findElement(By.linkText('REGISTER')).click())
-          .then(() => driver.getCurrentUrl())
-          .then(URL => URL.should.equal(site + 'register'))
+          .then(URL => URL.should.equal(site +'signup'))
    });
+   /* TODO: Finish Sign Up Test -- Currently Having Trouble Testing
+   test.it("Checking Sign Up Attempt", function() {
+      this.timeout(mochaTimeOut);
+      driver.get(site)
+          .then(() => driver.findElement(By.linkText('SIGN-UP')).click())
+          .then(() => driver.findElement(By.name('name')).sendKeys('ORANGETREE'))
+          .then(() => driver.findElement(By.name('email')).sendKeys('orange@orange.com'))
+          .then(() => driver.findElement(By.name('phone_number')).sendKeys('1234567890'))
+          .then(() => driver.findElement(By.linkText('Next')).click())
+          .then(() => driver.findElement(By.name('First Name')).sendKeys('DRORANGE'))
+          .then(() => driver.findElement(By.name('Last Name')).sendKeys('TREE'))
+          .then(() => driver.findElement(By.name('Email')).sendKeys('orange@orange.com'))
+          .then(() => driver.findElement(By.name('Phone Number')).sendKeys('1234567890'))
+          .then(() => driver.findElement(By.name('Password')).sendKeys('APPLETREE123'))
+          .then(() => driver.findElement(By.name('Confirm Password')).sendKeys('APPLETREE123'))
+          .then(() => driver.findElement(By.linkText('Next')).click())
+          .then(() => driver.getCurrentUrl())
+          .then(URL => URL.should.equal(site +'visitors'))
+   });
+   */
 });
 
 

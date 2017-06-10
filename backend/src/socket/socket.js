@@ -105,6 +105,7 @@ exports.createServer = function(io_in) {
                       Text.sendText(data.first_name + data.last_name, result, false);
 
                       var Email = require('../notification/email');
+                      Email.sendEmail(data.first_name + data.last_name, result, false);
                     });
 
                     exports.notifyNewList(company_id, result);

@@ -56,7 +56,7 @@ console.log('baseUrl', `${host}:${port}/api`);
 export function post(url, data) {
   console.group('POST');
   console.log('%c URL', 'color: blue', url);
-  console.log('%c Data', 'color: green', url);
+  console.log('%c Data', 'color: green', data);
   console.groupEnd();
   return new Promise((resolve, reject) => {
     instance({ method: 'post', url, data })
@@ -84,7 +84,7 @@ export function get(url) {
 export function put(url, data = {}) {
   console.group('PUT');
   console.log('%c URL', 'color: blue', url);
-  console.log('%c Data', 'color: green', url);
+  console.log('%c Data', 'color: green', data);
   console.groupEnd();
   return new Promise((resolve, reject) => {
     try {
@@ -103,7 +103,7 @@ export function put(url, data = {}) {
 export function del(url, data = {}) {
   console.group('DELETE');
   console.log('%c URL', 'color: blue', url);
-  console.log('%c Data', 'color: green', url);
+  console.log('%c Data', 'color: green', data);
   console.groupEnd();
   return new Promise((resolve, reject) => {
     try {

@@ -50,7 +50,7 @@ exports.getById = function(req, res) {
       if(err) {
           return res.status(400).json({error: "Can not Find"});
       } else {
-          console.log(employee)
+          console.log(employee);
           return res.status(200).json(employee);
       }
     });
@@ -103,7 +103,6 @@ exports.update = function(req, res) {
 
         employee.save(function(err) {
             console.log(err);
-            console.log(employee);
             if(err)
                 return res.status(400).json({error: "Can not Save"});
             var employee_json=employee.toJSON();

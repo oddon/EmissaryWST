@@ -1,11 +1,12 @@
 'use strict';
+import crypto from 'crypto';
 
 /*
  * This module is meant to house all of the API
  * routes that pertain to users
  */
 var exports = module.exports;
-import crypto from 'crypto';
+
 const SECRET = 'Powellcse112';
 export function passwordHash(password = '') {
   console.log('passwordHash(' + password + ')');

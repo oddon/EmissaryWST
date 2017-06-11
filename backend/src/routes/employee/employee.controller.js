@@ -18,7 +18,7 @@ var Employee = require('../../models/Employee');
 
 exports.login = function(req, res) {
     Employee.findOne(
-      {email:req.body.email, passowrd: passowrdHash(req.body.password) },
+      {email:req.body.email, password: passwordHash(req.body.password) },
       function(err, e) {
         if(err || !e){
           return res.status(400).send({error: "Can not Find"});

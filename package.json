@@ -58,7 +58,6 @@
     "jwt-simple": "0.2.0",
     "lodash": "4.0.0",
     "mongoose": "4.1.0",
-    "mongoose-encryption": "0.13.0",
     "morgan": "1.5.1",
     "newrelic": "1.25.4",
     "nodemailer": "1.3.1",

@@ -129,7 +129,7 @@ class LoginOverlay extends Component {
             } catch (e) {
               toastr.error('Server error', 'Please try again later');
             }
-            console.log("logged in");
+              toastr.success('Login successful!');
           }}
         />
         <Line />

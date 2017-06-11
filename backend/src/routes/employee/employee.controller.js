@@ -78,14 +78,19 @@ exports.insert = function(req, res) {
     employee.company_id = foundId;
   }
 
-    employee.save(function(err, e) {
-        if(err) {
-            return res.status(400).json({error: "Can not Save"});
-        }
-        var employee_json=e.toJSON();
-        delete employee_json.password;
-        return res.status(200).json(employee_json);
-    });
+  Employee.findById(req.params.id, function (err, employee) {
+    if(!err) 
+      return res.status(400).json({error: "User already exists"});
+  });
+
+  employee.save(function(err, e) {
+    if(err) {
+      return res.status(400).json({error: "Can not Save"});
+    }
+    var employee_json=e.toJSON();
+    delete employee_json.password;
+    return res.status(200).json(employee_json);
+  });
 };
 
 

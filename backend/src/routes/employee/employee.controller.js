@@ -5,16 +5,24 @@
  * routes that pertain to users
  */
 var exports = module.exports;
+import crypto from 'crypto';
+const SECRET = 'Powellcse112';
+export function passwordHash(password) {
+  return crypto.createHmac('sha256', SECRET)
+    .update(password)
+    .digest('hex');
+};
+
 
 var Employee = require('../../models/Employee');
 
 exports.login = function(req, res) {
-    Employee.findOne({email:req.body.email}, function(err, e) {
+    Employee.findOne(
+      {email:req.body.email, passowrd: passowrdHash(req.body.password) },
+      function(err, e) {
         if(err || !e){
           return res.status(400).send({error: "Can not Find"});
         }
-        if(!e.validPassword(req.body.password))
-          return res.status(400).send({error: "Incorrect Credentials"});
         var employee_json=e.toJSON();
         delete employee_json.password;
         return res.status(200).json(employee_json);
@@ -50,7 +58,7 @@ exports.insert = function(req, res) {
     employee.email = req.body.email,
     employee.phone_number  = req.body.phone_number,
     employee.company_id = req.body.company_id,
-    employee.password = employee.generateHash(req.body.password),
+    employee.password = passwordHash(req.body.password),
     employee.role =  req.body.role
 
   if (!employee.company_id) {

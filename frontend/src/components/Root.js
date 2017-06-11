@@ -71,10 +71,10 @@ class Root extends Component {
           <MuiThemeProvider muiTheme={muiTheme}>
             <ConnectedRouter history={history}>
               <div className="fullscreen">
-                <Route path="/" component={Header} />
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/welcome" component={Welcome} />
                 <Route exact path="/visitor/checkIn" component={CheckIn} />
+                <Route path="/employee" component={Header} />
                 <Route exact path="/employee/appointments" component={Appointments} />
                 <Route exact path="/employee/employees" component={Employees} />
                 <Route exact path="/employee/forms" component={Forms} />

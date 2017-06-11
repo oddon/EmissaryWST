@@ -12,6 +12,7 @@ import * as AppointmentsApi from '../../../api/Appointments';
 import * as AppointmentsActions from '../../../actions/Appointments';
 import AddAppointmentOverlay from './AddAppointmentOverlay';
 import Fab from '../../Buttons/Fab';
+import { toastr } from 'react-redux-toastr';
 
 
 function transformAppointmentList(appointmentList) {

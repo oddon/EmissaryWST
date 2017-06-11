@@ -27,11 +27,6 @@ class Header extends Component {
       showOverlay,
     } = this.props;
 
-    // Only show header if /visitor/ is not in the path (url)
-    if (!/\/employee\//.test(pathname)) return null;
-
-
-    let buttons = pathname === '/' ? null : <Buttons navigate={navigate} />
 
     return (
       <div>
@@ -46,7 +41,7 @@ class Header extends Component {
                 Emmisary
               </h1>
             </div>
-            {buttons}
+            <Buttons navigate={navigate} />
             <Hamburger
               onTouchTap={() => showOverlay('EMPLOYEE_NAV')}
             />

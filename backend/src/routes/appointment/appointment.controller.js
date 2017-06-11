@@ -42,14 +42,9 @@ module.exports.template.create = function(req, res) {
             if(err) return res.status(400).json({error: "Could Not Find"});
             if(appointments.length==0) {
                 appointment.save(function (err, a) {
-
                     console.log(err);
-
                     if (err)
                         return res.status(400).json({error: "Could Not Save"});
-
-
-
                     return res.status(200).json(a);
                 });
             }else{
@@ -105,12 +100,15 @@ module.exports.template.update = function(req, res){
 
 module.exports.template.delete = function(req, res){
     Appointment.findById(req.params.id, function(err, a) {
-        if(err)
-            res.status(400).json({error: "Could Not Find"});
+        if(err) {
+            console.log("Could not find")
+            return res.status(400).json({error: "Could Not Find"});
+        }
         a.remove(function(err) {
             if(err) {
-                res.status(400).json({error: "Could Not Save"});
+                return res.status(400).json({error: "Could Not Save"});
             } else {
+                console.log("remove succesful")
                 return res.status(200).json(a);
             }
         });

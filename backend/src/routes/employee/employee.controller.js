@@ -9,11 +9,9 @@ var exports = module.exports;
 
 const SECRET = 'Powellcse112';
 export function passwordHash(password = '') {
-  console.log('passwordHash(' + password + ')');
   const hash =  crypto.createHmac('sha256', SECRET)
     .update(password)
     .digest('hex');
-  console.log('hash', hash);
   return hash;
 };
 
@@ -22,12 +20,10 @@ var Employee = require('../../models/Employee');
 var Company = require('../../models/Company');
 
 exports.login = function(req, res) {
-    console.log(passwordHash(req.body.password))
     Employee.findOne(
       {email:req.body.email, password: passwordHash(req.body.password) },
       function(err, e) {
         if(err || !e){
-          console.log("cant find")
           return res.status(400).send({error: "Can not Find"});
         }
         var employee_json=e.toJSON();
@@ -50,7 +46,6 @@ exports.getById = function(req, res) {
       if(err) {
           return res.status(400).json({error: "Can not Find"});
       } else {
-          console.log(employee);
           return res.status(200).json(employee);
       }
     });
@@ -78,10 +73,17 @@ exports.insert = function(req, res) {
     employee.company_id = foundId;
   }
 
-  Employee.findById(req.params.id, function (err, employee) {
-    if(!err) 
-      return res.status(400).json({error: "User already exists"});
-  });
+  Employee.findOne({
+      first_name: employee.first_name, 
+      last_name: employee.last_name,
+      email: employee.email,
+      company_id: employee.company_id
+    }, function (err, employee) {
+      if(!!employee) {
+        return res.status(400).json({error: "User already exists"});
+      }
+    }
+  );
 
   employee.save(function(err, e) {
     if(err) {

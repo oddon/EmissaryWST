@@ -1,7 +1,10 @@
 # Team 1 Emissary
 
-## 0. Currently deployed on: 
+### Currently deployed on: 
 https://team1-emissary.herokuapp.com/
+
+### Staging site here:
+https://cse112-1-staging.herokuapp.com/
 
 ## 1. Getting Started
 **Emissary is a visitor check-in SaaS application targetted for small businesses.**

@@ -120,16 +120,6 @@ module.exports.template.resetCredentials = function(req, res) {
         if(err || !c)
             return res.status(400).json({error: "Could Not Find"});
 
-
-        // if the user is found but the password is wrong
-        if(!c.validPassword(req.body.password))
-            return res.status(400).send('loginMessage', 'Oops! Wrong password');
-        //update password
-
-        //upadate password
-        if (req.body.newpassword !== undefined)
-            c.password = c.generateHash(req.body.newpassword);
-
         //update email
         if (req.body.newemail !== undefined)
             c.email = req.body.newemail;

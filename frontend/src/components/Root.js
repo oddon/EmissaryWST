@@ -22,6 +22,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReduxToastr from 'react-redux-toastr';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { fade } from '../../node_modules/material-ui/utils/colorManipulator';
+import Landing from './Landing/Landing';
 import Header from './Header/Header';
 import Welcome from './Welcome/Welcome';
 import CheckIn from './Visitor/CheckIn/CheckIn';
@@ -71,7 +72,8 @@ class Root extends Component {
             <ConnectedRouter history={history}>
               <div className="fullscreen">
                 <Route path="/" component={Header} />
-                <Route exact path="/" component={Welcome} />
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/welcome" component={Welcome} />
                 <Route exact path="/visitor/checkIn" component={CheckIn} />
                 <Route exact path="/employee/appointments" component={Appointments} />
                 <Route exact path="/employee/employees" component={Employees} />

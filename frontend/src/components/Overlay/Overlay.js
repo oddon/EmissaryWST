@@ -9,7 +9,7 @@ const Overlay = ({
   ...props
 }) => !!isVisible
   ? (
-    <div className="absoluteMiddle c center">
+    <div className="absoluteMiddle c center" style={{padding: '5vh 0'}}>
       {children}
       <div className="overlay" {...props}></div>
     </div>

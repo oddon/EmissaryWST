@@ -7,6 +7,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import SectionHeader from '../SectionHeader';
 import ResponsiveTable from '../ResponsiveTable';
+import Fab from '../../Buttons/Fab';
+import AddEmployeeOverlay from './AddEmployeeOverlay';
+import * as OverlayActions from '../../../actions/Overlay';
 
 const headers = [
   {
@@ -30,23 +33,49 @@ const headers = [
 
 class Employees extends Component {
   render() {
+    const {
+      isOverlayVisible,
+      overlayMode,
+      showAddEmployeeOverlay,
+      hideOverlay,
+    } = this.props;
+
     return (
       <div className="stage">
         <SectionHeader text="Employees"/>
-        <div id="tableContainer">
+        <div className="tableContainer withFab">
           <ResponsiveTable
             headers={headers}
             containerClassName="tableContainer"
           />
         </div>
+        <AddEmployeeOverlay
+          isVisible={isOverlayVisible && overlayMode === 'ADD_EMPLOYEE'}
+          hideOverlay={hideOverlay}
+        />
+        <Fab
+          location="BOTTOM_RIGHT"
+          options={[
+            {
+              text: 'Add employee',
+              onClick: () => showAddEmployeeOverlay(),
+            },
+          ]}
+        />
       </div>
     );
   }
 }
 
-const stateToProps = (s) => ({});
+const stateToProps = (s) => ({
+  isOverlayVisible: s.overlay.isVisible,
+  overlayMode: s.overlay.mode,
+});
 
-const dispatchToProps = (d) => ({});
+const dispatchToProps = (d) => ({
+  showAddEmployeeOverlay: () => d(OverlayActions.showOverlay('ADD_EMPLOYEE')),
+  hideOverlay: () => d(OverlayActions.hideOverlay()),
+});
 
 Employees = connect(stateToProps, dispatchToProps)(Employees);
 export default Employees;

@@ -8,6 +8,9 @@ import {reducer as toastrReducer} from 'react-redux-toastr';
 import Visitor from './Visitor';
 import Window from './Window';
 import Overlay from './Overlay';
+import Credentials from './Credentials'
+import Company from './Company';
+import Appointments from './Appointments';
 
 const root = combineReducers({
   router: routerReducer,
@@ -15,6 +18,9 @@ const root = combineReducers({
   visitor: Visitor,
   window: Window,
   overlay: Overlay,
+  credentials: Credentials,
+  company: Company,
+  appointments: Appointments,
 });
 
 export default root;

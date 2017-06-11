@@ -11,11 +11,11 @@ const SHOWING_CLASS = 'showing';
 
 class SectionHeader extends Component {
   componentDidMount() {
-    const HALF_SECOND = 500;
+    const QUARTER_SECOND = 250;
     window.setTimeout(() => {
       const node = document.getElementById(sectionHeaderId);
       node.classList.add(SHOWING_CLASS);
-    }, HALF_SECOND)
+    }, QUARTER_SECOND)
   }
   render() {
     const { text } = this.props;

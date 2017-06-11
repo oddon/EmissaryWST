@@ -4,12 +4,10 @@
 
 
 const colors = {
-  primary: '#E87162',
-  primaryDark: '#FF782F',
-  primaryLight: '#FFB086',
-  secondary: '#67AFFF',
-  bright: '#5AFFCD',
-  dark: '#32292F',
+  primary: '#33FFCC',
+  secondary: '#4496FF',
+  bright: '#FF7F33',
+  dark: '#5F5E5D',
   darkGrey: '#484848',
   lightGrey: '#DBDBDB',
   grey: '#767676',
@@ -17,6 +15,7 @@ const colors = {
   cardBackground: '#FCF7FF',
   light: '#F4F7F9',
   green: '#43A047',
+  white: '#FFFFFF',
 };
 
 const otherBrands = {

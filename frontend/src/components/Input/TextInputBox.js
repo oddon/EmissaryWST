@@ -5,12 +5,15 @@
 import React, { Component } from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import colors from '../../colors';
+import styles from './style.mcss';
+import flex from '../style/flex.mcss';
 
 class TextInputBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isFocussed: false,
+      text: props.defaultValue || '',
     }
   }
 
@@ -36,6 +39,7 @@ class TextInputBox extends Component {
       inputRef,
       style,
       containerClassName,
+      readonly,
     } = this.props;
     const {
       isFocussed
@@ -45,16 +49,38 @@ class TextInputBox extends Component {
     let icon = null;
     switch (type) {
       case 'email':
-        icon = <FontIcon className="fa fa-envelope-o icon"/>;
+        icon = <FontIcon className={`fa fa-envelope-o ${styles.icon}`}/>;
         break;
 
       case 'password':
-        icon = <FontIcon className="material-icons icon">lock_outline</FontIcon>;
+        icon = (
+          <FontIcon className={`material-icons ${styles.icon}`}>
+            lock_outline
+          </FontIcon>
+        );
+        break;
+
+      case 'phone':
+        icon = (
+          <FontIcon className={`material-icons ${styles.icon}`}>
+            phone
+          </FontIcon>
+        );
+        inputType = 'text';
+        break;
+
+      case 'business':
+        icon = (
+          <FontIcon className={`material-icons ${styles.icon}`}>
+            work
+          </FontIcon>
+        );
+        inputType = 'text';
         break;
 
       case 'name':
       case 'account':
-        icon = <FontIcon className="fa fa-user-o icon" />;
+        icon = <FontIcon className={`fa fa-user-o ${styles.icon}`} />;
         inputType = 'text';
         break;
     }
@@ -69,7 +95,7 @@ class TextInputBox extends Component {
 
       >
         <div
-          className={`textInputBoxOutsideContainer ${!!isError ? 'error' : ''}`}
+          className={`${styles.outsideContainer} ${!!isError ? styles.error : ''}`}
           ref={(n) => { outsideContainerNode = n }}
           style={{
             ...style,
@@ -77,26 +103,30 @@ class TextInputBox extends Component {
           }}
         >
           {icon}
-          <div className={`textInputBoxContainer ${!!icon ? '' : 'noIcon'}`}>
+          <div className={`${styles.inputContainer} ${!!icon ? '' : 'noIcon'}`}>
             <input
-              onChange={onChange}
+              readOnly={!!readonly}
+              onChange={(e) => {
+                this.state.text = e.target.value;
+                onChange(e)
+              }}
               onFocus={this.onFocus.bind(this)}
               onBlur={this.onBlur.bind(this)}
               ref={(n) => {
                 if (!n) return;
-                n.value = !!defaultValue ? defaultValue : '';
+                n.value = this.state.text;
                 if (!!inputRef) {
                   inputRef(n)
                 }
             }}
               type={inputType}
               placeholder={placeholder}
-              className="textInputBox"
+              className={styles.input}
             />
           </div>
         </div>
         {!!isError && !!errorMessage
-          ? <p className="textInputBoxErrorMessage">{errorMessage}</p>
+          ? <p className={styles.errorMessage}>{errorMessage}</p>
           : null
         }
       </div>

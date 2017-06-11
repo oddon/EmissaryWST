@@ -16,12 +16,11 @@ $smallHeader: "(max-width: 1000px)";
  * that sort of contrasts the primary, bright - a color that is meant to
  * heavily contrast the other two to make things pop
  */
-$c_primary: #E87162;
-$c_secondary: #FF928F;
-$c_bright: #FFC44C;
-$c_header: #F2EEEA;
-$c_background: #B4B2AE;
+$c_primary: #33FFCC;
+$c_secondary: #4496FF;
+$c_bright: #E87162;
 $c_dark: #5F5E5D;
+$c_backgroundLight: #F2EEEA;
 $c_darkGrey: #484848;
 $c_grey: #767676;
 $c_lightGrey: #DBDBDB;
@@ -30,6 +29,7 @@ $c_secondaryText: rgba(0,0,0,0.4);
 $c_cardBackground: #FCF7FF;
 $c_light: #F4F7F9;
 $c_error: #FF5C58;
+$c_green: #43A047;
 
 // Fonts
 $f_brand: 'Bree Serif', serif;
@@ -111,6 +111,9 @@ $f_brand: 'Bree Serif', serif;
 }
 .r.top {
   align-items: flex-start !important;
+}
+.r.wrap {
+  flex-wrap: wrap !important;
 }
 
 
@@ -197,7 +200,7 @@ $SMALL_HEADER_HEIGHT: 42px;
   width: 100%;
   height: $HEADER_HEIGHT;
   margin: 0;
-  background-color: $c_header !important;
+  background-color: $c_backgroundLight !important;
   padding: 0 8px;
   position: fixed;
   top: 0;
@@ -364,9 +367,10 @@ $SMALL_HEADER_HEIGHT: 42px;
 
 .overlayCard{
   z-index: 15 !important;
-  padding: 0 32px 32px 32px !important;
+  padding: 52px 32px 32px 32px !important;
   width: 90vw;
   max-width: 568px;
+  max-height: 90vh;
   #x {
     font-size: 32px !important;
   }
@@ -413,6 +417,7 @@ $SMALL_HEADER_HEIGHT: 42px;
 .line {
   border-bottom: 1px solid $c_lightGrey !important;
 }
+
 
 .textInputBoxOutsideContainer {
   border: 1px solid $c_lightGrey;
@@ -614,10 +619,186 @@ $SECTION_HEADER_HEIGHT: 52px;
 }
 
 $TABLE_CONTAINER_WIDTH: 90%;
-.tableContainer{
+.tableContainer {
   margin-left: (100 - $TABLE_CONTAINER_WIDTH) / 2;
   margin-right: (100 - $TABLE_CONTAINER_WIDTH) / 2;
-  margin-top: 42px;
   width: $TABLE_CONTAINER_WIDTH;
-  height: 100%;
+  position: absolute;
+  top: 142px;
+  bottom: 18px;
 }
+.tableContainer.withFab {
+  bottom: 72px;
+}
+
+// Signup
+.signupStepLabel {
+  font-size: 20px;
+}
+.signupStep {
+  font-weight: 600;
+}
+
+// Landing
+$LANDING_FOOTER_HEIGHT: 52px;
+.landing {
+  background-color: $c_backgroundLight;
+  position: relative;
+
+  .imageWrapper {
+    height: 100%;
+    overflow: hidden;
+    img {
+      height: 100%;
+      filter: blur(3px);
+    }
+  }
+  .content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .brandContainer {
+    width: 100vw;
+    height: 100vh;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 78px;
+      width: 368px;
+      @media #{$mobile} {
+        width: 100%;
+        left: 0;
+      }
+    }
+    @extend .c, .c.center;
+  }
+  .brandWrapper {
+    height: 64vh;
+    width: 526px;
+    background-color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    bottom: $LANDING_FOOTER_HEIGHT;
+    @media #{$mobile} {
+      max-width: 386px;
+      width: 90%;
+    }
+  }
+  .brand {
+    width: 100%;
+    text-align: center;
+    font-family: $f_brand;
+    font-size: 106px;
+    margin: 0;
+    color: #5F5E5D;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    @media #{$mobile} {
+      font-size: 62px;
+    }
+  }
+
+  @extend .fullscreen;
+}
+.landingFooter {
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+  left: 0;
+  height: $LANDING_FOOTER_HEIGHT;
+
+  .button {
+    transform: scale(2);
+    @media #{$tablet} {
+      transform: scale(1.5);
+    }
+  }
+
+  @extend .r, .r.around;
+}
+.featuresHeader {
+  width: 100%;
+  text-align: center;
+  font-size: 64px;
+  font-weight: 300;
+  color: $c_dark;
+  margin: 0;
+  position: relative;
+  bottom: 8px;
+  @media #{$mobile} {
+    font-size: 37px;
+  }
+}
+.featureIcon {
+  height: 200px;
+  color: $c_dark !important;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  bottom: 14px;
+  @media #{$mobile} {
+    height: 144px;
+  }
+}
+.featuresContent {
+  font-size: 22px;
+  margin: 20px 0 20px 0;
+  line-height: 160%;
+  position: relative;
+  bottom: 8px;
+  @media #{$mobile} {
+    font-size: 16px;
+  }
+}
+.featureStep {
+  font-size: 18px;
+  @media #{$mobile} {
+    font-size: 12px;
+  }
+}
+
+.priceBoxContainer {
+  .price {
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+    text-align: right;
+  }
+  .money {
+    margin: 4px 0;
+    font-size: 42px;
+    font-weight: 600;
+    color: $c_green;
+  }
+}
+.priceBox {
+  border: solid $c_secondary 2px;
+  border-radius: 3px;
+
+  li {
+    font-size: 22px;
+    font-weight: 400;
+    color: $c_dark;
+  }
+  li:not(last-child) {
+    margin-bottom: 8px;
+  }
+
+}
+.priceHeader {
+  width: 100%;
+  background-color: $c_secondary;
+  color: white;
+  margin: 0;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 28px;
+}
+
+
+

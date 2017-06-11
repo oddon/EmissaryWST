@@ -46,12 +46,14 @@ var common = {
   }
 };
 
+console.log('Beginning Webpack!');
+console.log('Using package.json script: ' + process.env.npm_lifecycle_event);
+console.log('NODE_ENV: ' + process.env.NODE_ENV);
+console.log('\n')
+
 var config;
-console.log('process.env.npm_lifecycle_event', process.env.npm_lifecycle_event);
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    console.log('case `build`');
     config = merge(
       common,
       {
@@ -94,7 +96,6 @@ switch (process.env.npm_lifecycle_event) {
     break;
 
   default:
-    console.log('case `default`');
     config = merge(
       common,
       {
@@ -106,7 +107,7 @@ switch (process.env.npm_lifecycle_event) {
         ],
         plugins: [
           new HtmlWebpackPlugin({
-            title: 'Scholar',
+            title: 'Emissary',
             filename: 'index.html',
             template: 'template.ejs'
           }),
@@ -115,7 +116,6 @@ switch (process.env.npm_lifecycle_event) {
               'NODE_ENV': JSON.stringify('development')
             }
           }),
-          new DashboardPlugin(),
           new webpack.HotModuleReplacementPlugin()
         ],
         devtool: 'eval-source-map',

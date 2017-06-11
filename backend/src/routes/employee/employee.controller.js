@@ -53,6 +53,18 @@ exports.insert = function(req, res) {
     employee.password = employee.generateHash(req.body.password),
     employee.role =  req.body.role
 
+  if (!employee.company_id) {
+      // Try to find company_id from the name
+      // QUERY FOR company id with name
+    const foundId = true;
+    if (foundId) {
+      employee.company_id = foundId;
+    } else {
+      res.status(400).json({ error: 'Could\'nt find company'});
+      return;
+    }
+  }
+
     employee.save(function(err, e) {
         if(err) {
             return res.status(400).json({error: "Can not Save"});

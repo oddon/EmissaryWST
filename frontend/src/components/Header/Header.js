@@ -28,7 +28,7 @@ class Header extends Component {
     } = this.props;
 
     // Only show header if /visitor/ is not in the path (url)
-    if (/\/visitor\//.test(pathname)) return null;
+    if (!/\/employee\//.test(pathname)) return null;
 
 
     let buttons = pathname === '/' ? null : <Buttons navigate={navigate} />

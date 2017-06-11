@@ -33,6 +33,7 @@ module.exports.template.create = function(req, res) {
     company.phone_number = req.body.phone_number;
     company.paid_time=new Date();
 
+
     //optinal info
     /*company.expiration_date=req.body.expiration_date;
     company.credit_card_number=req.body.credit_card_number;

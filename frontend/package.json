@@ -5,21 +5,25 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dashboard -c -- node server.js",
+    "start": "webpack-dev-server -c",
     "stats": "webpack --profile --json > stats.json",
     "build": "webpack --progress --colors",
-    "watch": "webpack --progress --colors --watch"
+    "clean": "rm -rf dist",
+    "dev-server": "webpack-dev-server --colors"
   },
   "author": "Anthony Altieri (github: AnthonyAltieri)",
   "license": "UNLICENSED",
   "dependencies": {
+    "axios": "^0.16.2",
     "bunyan": "^1.8.10",
     "core-js": "^2.4.1",
+    "css-loader": "^0.25.0",
     "fixed-data-table": "^0.6.4",
     "granim": "^1.0.6",
     "history": "^4.6.1",
     "material-ui": "^0.16.1",
     "moment": "^2.18.1",
+    "query-string": "^4.3.4",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.1",
     "react-dom": "^15.3.1",
@@ -34,6 +38,7 @@
     "react-youtube": "^7.3.0",
     "redux": "^3.5.2",
     "shortid": "^2.2.6",
+    "svg-inline-loader": "^0.7.1",
     "uuid": "^2.0.3"
   },
   "devDependencies": {

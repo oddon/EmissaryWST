@@ -33,9 +33,13 @@ class ResponsiveTable extends Component {
   }
 
   componentDidMount() {
-    const container = document.getElementById(containerId);
-    this.state.width = container.offsetWidth || DEFAULT_WIDTH;
-    this.state.height = container.offsetHeight || DEFAULT_HEIGHT;
+    const { containerClassName } = this.props;
+    console.log('containerClassName', containerClassName)
+    const container = document.getElementsByClassName(containerClassName)[0];
+    console.log('container.offsetWidth', container.offsetWidth)
+    console.log('container.offsetHeight', container.offsetHeight)
+    this.state.width = container.offsetWidth;
+    this.state.height = container.offsetHeight;
     this.forceUpdate();
     this.oldWindowOnResize = window.onresize;
     window.onresize = () => {
@@ -44,8 +48,8 @@ class ResponsiveTable extends Component {
       }
       const ONE_TENTH_SECOND = 100;
       (throttle(() => {
-        this.state.width = container.offsetWidth || DEFAULT_WIDTH;
-        this.state.height = container.offsetHeight || DEFAULT_HEIGHT;
+        this.state.width = container.offsetWidth;
+        this.state.height = container.offsetHeight;
         this.forceUpdate();
       }, ONE_TENTH_SECOND))();
     }
@@ -68,10 +72,11 @@ class ResponsiveTable extends Component {
       columnWidth = DEFAULT_COLUMN_WIDTH,
     } = this.props;
 
+    console.log('this.state responsive table', this.state)
 
     return (
       <div
-        className={`${containerClassName || ''} relative`}
+        className={`relative`}
         id={containerId}
       >
         {rows.length === 0
@@ -79,8 +84,8 @@ class ResponsiveTable extends Component {
             <p
               style={{
                 top: 62,
-                right: '40%',
-                left: '40%',
+                width: '100%',
+                textAlign: 'center',
                 position: 'absolute',
                 fontSize: 32,
                 color: 'rgba(0,0,0,0.2)',
@@ -95,8 +100,14 @@ class ResponsiveTable extends Component {
           rowHeight={rowHeight}
           headerHeight={headerHeight}
           rowsCount={rows.length}
-          width={this.state.width || DEFAULT_WIDTH}
-          height={this.state.height || DEFAULT_HEIGHT}
+          width={this.state.width}
+          height={this.state.height}
+          ref={() => {
+            const node = document
+              .querySelector('.fixedDataTableLayout_horizontalScrollbar');
+            if (!node) return;
+            node.parentNode.removeChild(node);
+          }}
         >
           {headers.map((h) => (
             <Column

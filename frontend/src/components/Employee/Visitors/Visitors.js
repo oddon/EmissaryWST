@@ -33,7 +33,7 @@ class Visitors extends Component {
     return (
       <div className="stage">
         <SectionHeader text="Visitors"/>
-        <div id="tableContainer">
+        <div className="tableContainer">
           <ResponsiveTable
             headers={headers}
             containerClassName="tableContainer"

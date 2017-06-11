@@ -2,6 +2,7 @@
  * @author Anthony Altieri on 6/4/17.
  */
 
+const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -30,8 +31,13 @@ exports.setupCSS = function(paths) {
     module: {
       loaders: [
         {
+          test: /\.mcss$/,
+          loader: 'style!css-loader?modules',
+          include: /components/,
+        },
+        {
           test: /\.css$/,
-          loaders: ['style', 'css'],
+          loader: 'style!css-loader',
         },
         {
           test: /\.scss$/,
@@ -43,7 +49,10 @@ exports.setupCSS = function(paths) {
           loaders: ['style', 'css', 'less'],
         },
       ]
-    }
+    },
+    plugins: [
+      new ExtractTextPlugin('[name].[chunkhash].css')
+    ]
   }
 };
 
@@ -95,12 +104,12 @@ exports.setupImg = function() {
   return {
     module: {
       loaders: [
-        {
-          test: /\.svg$/,
-          loader: process.env.NODE_ENV === 'production'
-            ? 'file?name=[name].[hash].[ext]'
-            : 'file',
-        },
+        // {
+        //   test: /\.svg$/,
+        //   loader: process.env.NODE_ENV === 'production'
+        //     ? 'file?name=[name].[hash].[ext]'
+        //     : 'file',
+        // },
         {
           test: /\.(jpg|png)$/,
           loader: process.env.NODE_ENV === 'production'

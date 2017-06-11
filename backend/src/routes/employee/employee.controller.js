@@ -7,13 +7,17 @@
 var exports = module.exports;
 
 var Employee = require('../../models/Employee');
+var Company = require('../../models/Company');
 
 exports.login = function(req, res) {
     Employee.findOne({email:req.body.email}, function(err, e) {
+        console.log(req.body.password)
         if(err || !e){
+          console.log("cant find")
           return res.status(400).send({error: "Can not Find"});
         }
         if(!e.validPassword(req.body.password))
+          console.log("incorrect credentials")
           return res.status(400).send({error: "Incorrect Credentials"});
         var employee_json=e.toJSON();
         delete employee_json.password;
@@ -47,22 +51,22 @@ exports.insert = function(req, res) {
     /* required info */
     employee.first_name = req.body.first_name;
     employee.last_name = req.body.last_name;
-    employee.email = req.body.email,
-    employee.phone_number  = req.body.phone_number,
-    employee.company_id = req.body.company_id,
-    employee.password = employee.generateHash(req.body.password),
-    employee.role =  req.body.role
+    employee.email = req.body.email;
+    employee.phone_number  = req.body.phone_number;
+    employee.company_id = req.body.company_id;
+    employee.company_name = req.body.company_name;
+    employee.password = employee.generateHash(req.body.password);
+    employee.role =  req.body.role;
 
   if (!employee.company_id) {
       // Try to find company_id from the name
       // QUERY FOR company id with name
-    const foundId = true;
-    if (foundId) {
-      employee.company_id = foundId;
-    } else {
-      res.status(400).json({ error: 'Could\'nt find company'});
-      return;
-    }
+    Company.findOne({company_name:employee.company_name}, function(err, e) {
+        if(err || !e){
+          return res.status(400).send({error: "Can not find Company of Employee"});
+        }
+    });
+    employee.company_id = foundId;
   }
 
     employee.save(function(err, e) {

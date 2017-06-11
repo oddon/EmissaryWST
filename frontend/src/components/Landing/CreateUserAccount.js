@@ -182,13 +182,12 @@ const CreateUserAccount = ({
               !!companyId ? 'Owner' : 'Undeclared',
             );
             if (payload.error) {
-              toastr.error('Server error', 'Please try again later');
+              toastr.error('Payload error', 'Please try again later');
               return
             }
           } catch (e) {
             toastr.error('Server error', 'Please try again later');
           }
-
         }}
       />
       <Line />

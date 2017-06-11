@@ -8,6 +8,7 @@ import Checkbox from 'material-ui/Checkbox';
 import FontIcon from 'material-ui/FontIcon';
 import * as OverlayActions from '../../actions/Overlay';
 import * as CredentialsActions from '../../actions/Credentials';
+import * as EmployeesApi from '../../api/Employees';
 import FlatButton from '../Buttons/FlatButton';
 import RaisedButton from '../Buttons/RaisedButton';
 import JumboRaisedButton from '../Buttons/JumboRaisedButton';
@@ -115,7 +116,21 @@ class LoginOverlay extends Component {
           label="Log in"
           backgroundColor={colors.bright}
           labelColor={'#FFFFFF'}
-          onTouchTap={async () => {}}
+          onTouchTap={async () => {
+            try {
+              const payload = await EmployeesApi.login(
+                email,
+                password
+              );
+              if (payload.error) {
+                toastr.error('Payload error', 'Please try again later');
+                return
+              }
+            } catch (e) {
+              toastr.error('Server error', 'Please try again later');
+            }
+            console.log("logged in");
+          }}
         />
         <Line />
         <div className="r between">

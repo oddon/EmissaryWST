@@ -54,6 +54,10 @@ console.log('axios instance', instance);
 console.log('baseUrl', `${host}:${port}/api`);
 
 export function post(url, data) {
+  console.group('POST');
+  console.log('%c URL', 'color: blue', url);
+  console.log('%c Data', 'color: green', url);
+  console.groupEnd();
   return new Promise((resolve, reject) => {
     instance({ method: 'post', url, data })
       .then(response => resolve(response.data))
@@ -62,6 +66,9 @@ export function post(url, data) {
 }
 
 export function get(url) {
+  console.group('GET');
+  console.log('%c URL', 'color: blue', url);
+  console.groupEnd();
   return new Promise((resolve, reject) => {
     try {
       instance({ method: 'get', url })
@@ -75,6 +82,10 @@ export function get(url) {
 }
 
 export function put(url, data = {}) {
+  console.group('PUT');
+  console.log('%c URL', 'color: blue', url);
+  console.log('%c Data', 'color: green', url);
+  console.groupEnd();
   return new Promise((resolve, reject) => {
     try {
       instance({ method: 'put', url, data })
@@ -90,6 +101,10 @@ export function put(url, data = {}) {
 // This function will handle the creation of a querystring
 // NOTE: this is for DELETE
 export function del(url, data = {}) {
+  console.group('DELETE');
+  console.log('%c URL', 'color: blue', url);
+  console.log('%c Data', 'color: green', url);
+  console.groupEnd();
   return new Promise((resolve, reject) => {
     try {
       instance({ method: 'delete', url, data })

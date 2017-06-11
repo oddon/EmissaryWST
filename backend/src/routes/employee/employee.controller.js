@@ -7,7 +7,7 @@
 var exports = module.exports;
 import crypto from 'crypto';
 const SECRET = 'Powellcse112';
-export function passwordHash(password) {
+export function passwordHash(password = '') {
   console.log('passwordHash(' + password + ')');
   const hash =  crypto.createHmac('sha256', SECRET)
     .update(password)

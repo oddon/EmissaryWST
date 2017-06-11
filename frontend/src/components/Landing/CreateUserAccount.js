@@ -175,6 +175,7 @@ const CreateUserAccount = ({
             const payload = await EmployeesApi.create(
               firstname,
               lastname,
+              password,
               email,
               phoneNumber,
               companyId,

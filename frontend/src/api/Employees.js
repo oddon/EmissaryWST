@@ -7,6 +7,7 @@ import { post, get, put, del } from './http';
 export const create = async (
   firstName,
   lastName,
+  password,
   email,
   phoneNumber,
   companyId,
@@ -20,6 +21,7 @@ export const create = async (
     phone_number: phoneNumber,
     company_id: companyId,
     company_name: companyName,
+    password,
     role,
     email,
   }

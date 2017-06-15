@@ -29,6 +29,7 @@ export const getById = async (appointmentId) => await get(
 );
 
 export const getAllByCompanyId = async (companyId) => {
+  console.log(companyId)
   const payload = await get(`/appointments/company/${companyId}`);
   if (payload.error)
     return payload
@@ -45,6 +46,9 @@ export const getAllByCompanyId = async (companyId) => {
     }
     appointments.push(appointment)
   })
+
+  console.log("what the actual fuck")
+  console.log(appointments)
 
   return appointments
 }

@@ -105,9 +105,8 @@ test.describe("Log In Page", function() {
     test.it("Log in page loads", function() {
        this.timeout(mochaTimeOut);
        driver.get(site)
-            .then(() => driver.findElement(By.linkText('LOGIN')).click())
-            .then(() => driver.getCurrentUrl())
-            .then(URL => URL.should.equal(site + 'login'))
+            .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Log in')]")).click())
+            .then(() => driver.findElement(By.xpath("//*[contains(text(), 'No Account?')]")))
     });
 });
 
@@ -115,30 +114,11 @@ test.describe("Register Page", function() {
    test.it("Checks Register Page Loads", function() {
       this.timeout(mochaTimeOut);
       driver.get(site)
-          .then(() => driver.findElement(By.linkText('SIGN-UP')).click())
-          .then(() => driver.getCurrentUrl())
-          .then(URL => URL.should.equal(site +'signup'))
+            .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Sign up')]")).click())
+            .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Create Business Account')]")))
+            .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Already have a Business Account?')]")))
+            .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Already created an account?')]")))
    });
-   /* TODO: Finish Sign Up Test -- Currently Having Trouble Testing
-   test.it("Checking Sign Up Attempt", function() {
-      this.timeout(mochaTimeOut);
-      driver.get(site)
-          .then(() => driver.findElement(By.linkText('SIGN-UP')).click())
-          .then(() => driver.findElement(By.name('name')).sendKeys('ORANGETREE'))
-          .then(() => driver.findElement(By.name('email')).sendKeys('orange@orange.com'))
-          .then(() => driver.findElement(By.name('phone_number')).sendKeys('1234567890'))
-          .then(() => driver.findElement(By.linkText('Next')).click())
-          .then(() => driver.findElement(By.name('First Name')).sendKeys('DRORANGE'))
-          .then(() => driver.findElement(By.name('Last Name')).sendKeys('TREE'))
-          .then(() => driver.findElement(By.name('Email')).sendKeys('orange@orange.com'))
-          .then(() => driver.findElement(By.name('Phone Number')).sendKeys('1234567890'))
-          .then(() => driver.findElement(By.name('Password')).sendKeys('APPLETREE123'))
-          .then(() => driver.findElement(By.name('Confirm Password')).sendKeys('APPLETREE123'))
-          .then(() => driver.findElement(By.linkText('Next')).click())
-          .then(() => driver.getCurrentUrl())
-          .then(URL => URL.should.equal(site +'visitors'))
-   });
-   */
 });
 
 

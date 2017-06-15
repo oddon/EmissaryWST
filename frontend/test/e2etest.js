@@ -39,7 +39,7 @@ test.before(function() {
     }
     else {
         driver = new webdriver.Builder().forBrowser('chrome').build();
-        site = 'http://localhost:4941/';
+        site = 'http://localhost:3000/'; // Was 4941
     }
 })
 
@@ -47,33 +47,57 @@ test.describe("Landing Page", function() {
    test.it("Checks landing home", function() {
        this.timeout(mochaTimeOut);
        driver.get(site)
+           // Check if title of website is correct
            .then(() => driver.getTitle())
            .then(title => title.should.equal('Emissary'))
            .then(() => driver.getCurrentUrl())
            .then(URL => URL.should.equal(site))
+
+           // Check if buttons exist with correct labels
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Features')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Pricing')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Log in')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Sign up')]")))
    });
-   test.it("Checks features menu link", function() {
+   test.it("Checks if features menu button displays correct content", function() {
        this.timeout(mochaTimeOut);
        driver.get(site)
-           .then(() => driver.findElement(By.linkText('FEATURES')).click())
-           .then(() => driver.getCurrentUrl())
-           .then(URL => URL.should.equal(site + '#features'))
+
+           // Check if content is correct
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Features')]")).click())
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Automated Check-in')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Minimize the work of" +
+                                                   " your receptionist or completely replace them')]")))
+           // Check if next button works
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Next')]")).click())
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Customizable')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Change the look, feel, and" +
+                                                   " content of your forms through our Form Builder')]")))
+
+           // Check if previous button works
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Previous')]")).click())
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Automated Check-in')]")))
    });
-   test.it("Checks pricing menu link", function() {
+   test.it("Checks if pricing menu button displays correct content", function() {
        this.timeout(mochaTimeOut);
        driver.get(site)
-           .then(() => driver.findElement(By.linkText('PRICING')).click())
-           .then(() => driver.getCurrentUrl())
-           .then(URL => URL.should.equal(site + '#pricing'))
-   });
-   test.it("Checks home menu link", function() {
-       this.timeout(mochaTimeOut);
-       driver.get(site)
-           .then(() => driver.findElement(By.linkText('FEATURES')).click())
-           .then(() => driver.findElement(By.linkText('PRICING')).click())
-           .then(() => driver.findElement(By.linkText('HOME')).click())
-           .then(() => driver.getCurrentUrl())
-           .then(URL => URL.should.equal(site))
+           
+           // Check if Pricing Box is displayed
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Pricing')]")).click())
+
+           // Check if Subscription Box is displayed
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Subscription')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Unlimited visitors and employees')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Sync employees with Slack')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Form Builder - Customizable check-in forms')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), '$20')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'month')]")))
+
+           // Check if the Free Trial Box is displayed
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Free Trial')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Try Emissary for two weeks')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Easy sign up process, be ready in no time')]")))
+           .then(() => driver.findElement(By.xpath("//*[contains(text(), 'Free')]")))
    });
 });
 

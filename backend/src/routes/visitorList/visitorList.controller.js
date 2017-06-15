@@ -3,7 +3,7 @@
 //Import Resources and Libs
 
 var Email = require('../../notification/email');
-var TextModel = require('../../notification/text');
+var Text = require('../../notification/text');
 
 var VisitorList = require('../../models/VisitorList');
 var Employee = require('../../models/Employee');
@@ -163,6 +163,9 @@ exports.create = function(param, callback){
                         return callback(null, list); 
                     }
                     the_appointment.is_checkedin = true;
+                    console.log("visitor list find one");
+                    Text.sendText(the_appointment.first_name + the_appointment.last_name, [{phone_number: '5014139826'}], false);
+
                     the_appointment.save(function (err, checkedin_appointment){
                         if(err) return callback({error: "an error in saving"}, null);
                         return callback(null, list);

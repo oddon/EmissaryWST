@@ -5,6 +5,7 @@ import Input from '../../Input/TextInputBox';
 import JumboRaisedButton from '../../Buttons/JumboRaisedButton';
 import { toastr } from 'react-redux-toastr';
 import * as AppointmentsAPI from '../../../api/Appointments';
+import moment from 'moment';
 
 const AddAppointmentOverlay = ({
   isVisible,
@@ -114,7 +115,7 @@ const AddAppointmentOverlay = ({
           try {
 
             console.log("called add appointment")
-            /*
+
             const payload = await AppointmentsAPI.create(
               firstname,
               lastname,
@@ -130,15 +131,15 @@ const AddAppointmentOverlay = ({
 
               toastr.error('Server error try again')
               return
-            } */
+            }
 
             const appointment = {
               firstName: firstname,
               lastName: lastname,
               phoneNumber: phoneNumber,
               providerName: providerName,
-              date,
-              time
+              date: moment(date).format('MMM Do YYYY'),
+              time: moment(date).format('h:mm:ss a')
             }
 
             hideOverlay(appointment)
